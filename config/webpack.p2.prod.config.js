@@ -8,7 +8,7 @@ const config = require('./webpack.p2.dev.config');
 // 压缩版
 const minConfig = merge(config, {
   output: {
-    filename: 'p2.js',
+    filename: 'index.js',
   },
   plugins: [
     new webpack.optimize.UglifyJsPlugin({
@@ -19,4 +19,4 @@ const minConfig = merge(config, {
   ],
 });
 
-module.exports = [minConfig, config];
+module.exports = minConfig;

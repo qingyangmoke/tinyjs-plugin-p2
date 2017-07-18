@@ -10,12 +10,12 @@ Version: v${pkg.version}`;
 
 const config = {
   entry: {
-    'P2': [path.resolve(__dirname, '../src/p2/index.js')]
+    'P2': [path.resolve(__dirname, '../src/index.js')]
   },
   output: {
     path: path.resolve(__dirname, '../dist'),
     publicPath: path.resolve(__dirname, '../dist'),
-    filename: 'p2.debug.js',
+    filename: 'index.debug.js',
     libraryTarget: 'umd',
     library: ['Tiny', 'Physics', '[name]'],
   },

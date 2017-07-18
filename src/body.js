@@ -1,5 +1,5 @@
 import { default as InversePointProxy } from './InversePointProxy';
-import * as P2Math from '../core/math';
+import * as P2Math from './core/math';
 import { default as BodyDebug } from './BodyDebug';
 
 const p2 = require('./p2');
