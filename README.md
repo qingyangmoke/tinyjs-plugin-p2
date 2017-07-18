@@ -1,6 +1,6 @@
-# tinyjs-plugin-physics
+# tinyjs-plugin-p2
 
-> tiny 物理引擎基础库 - 文档待完善
+> tiny P2物理引擎
 
 ## 查看demo
 
@@ -9,22 +9,16 @@
 ## P2
 > P2 物理引擎
 
-## ant
-> 精简版物理引擎
-
 ## 引用方法
 
 - 推荐作为依赖使用
 
-  - `npm install tinyjs-plugin-physics --save`
-
+  - `npm install tinyjs-plugin-p2 --save`
+  - 或者使用 ./dist/index.js 或者./dist/index.debug.js
 - 也可以直接引用线上cdn地址，注意要使用最新的版本号，例如：
 
-  - https://gw.alipayobjects.com/as/g/tiny-plugins/tinyjs-plugin-physics/0.0.3/p2.debug.js
-  - https://gw.alipayobjects.com/as/g/tiny-plugins/tinyjs-plugin-physics/0.0.3/p2.js
-
-  - https://gw.alipayobjects.com/as/g/tiny-plugins/tinyjs-plugin-physics/0.0.3/ant.js
-  - https://gw.alipayobjects.com/as/g/tiny-plugins/tinyjs-plugin-physics/0.0.3/ant.debug.js
+  - https://gw.alipayobjects.com/as/g/tiny-plugins/tinyjs-plugin-p2/0.0.3/index.debug.js
+  - https://gw.alipayobjects.com/as/g/tiny-plugins/tinyjs-plugin-p2/0.0.3/index.js
 
 ## 起步
 首先当然是要引入，推荐`NPM`方式，当然你也可以使用`CDN`或下载独立版本，先从几个例子入手吧！
@@ -36,9 +30,7 @@
 <script src="http://tinyjs.net/libs/tiny.debug.js"></script>
 ```
 ``` js
-var Physics = require('tinyjs-plugin-physics');
-// 或者
-// import Physics from 'tinyjs-plugin-physics';
+var p2 = require('tinyjs-plugin-p2');
 ```
 
 ## 相关文档
