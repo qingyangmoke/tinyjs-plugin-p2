@@ -1,12 +1,12 @@
 /**
 * This is a slightly modified version of http://api.jquery.com/jQuery.extend/
-*
-* @method Tiny.Physics.P2.Utils.extend
+* @private
+* @method Tiny.Physics.P2.Utils#extend
 * @param {boolean} deep - Perform a deep copy?
 * @param {object} target - The target object to copy to.
 * @return {object} The extended object.
 */
-export function extend(a, b) {
+function extend(a, b) {
   for (const key in b) {
     a[key] = b[key];
   }
@@ -14,12 +14,12 @@ export function extend(a, b) {
 };
 
 /**
-  * Picks a random pastel color.
-  *
-  * @method Tiny.Physics.P2.BodyDebug#randomPastelHex
-  * @private
-  */
-export function randomPastelHex() {
+* Picks a random pastel color.
+*
+* @method Tiny.Physics.P2.Utils#randomPastelHex
+* @private
+*/
+function randomPastelHex() {
   let blue, green, mix, red;
   mix = [255, 255, 255];
 
@@ -35,26 +35,33 @@ export function randomPastelHex() {
 }
 
 /**
-  * Converts from RGB to Hex.
-  *
-  * @method Tiny.Physics.P2.BodyDebug#rgbToHex
-  * @private
-  */
-export function rgbToHex(r, g, b) {
+ * Converts from RGB to Hex.
+ *
+ * @method Tiny.Physics.P2.Utils#rgbToHex
+ * @private
+ */
+function rgbToHex(r, g, b) {
   return componentToHex(r) + componentToHex(g) + componentToHex(b);
 }
 
 /**
 * Component to hex conversion.
 *
-* @method Tiny.Physics.P2.BodyDebug#componentToHex
+* @method Tiny.Physics.P2.Utils#componentToHex
 * @private
 */
-export function componentToHex(c) {
+function componentToHex(c) {
   const hex = c.toString(16);
   if (hex.length === 2) {
     return hex;
   } else {
-    return hex + '0';
+    return `${hex}0`;// hex + '0';
   }
 }
+
+export {
+  extend,
+  randomPastelHex,
+  rgbToHex,
+  componentToHex,
+};

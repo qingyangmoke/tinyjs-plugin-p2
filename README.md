@@ -35,7 +35,7 @@ var p2 = require('tinyjs-plugin-p2');
 
 ## 相关文档
 - [Tiny.js](http://tinyjs.net/#/docs/api)
-- [phaser](http://phaser.io/)
+- [phaser](https://github.com/photonstorm/phaser)
 - [p2](https://github.com/schteppe/p2.js)
 
 ## API文档

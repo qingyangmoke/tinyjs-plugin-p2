@@ -1,107 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-  <title>p2.js and Pixi.js example</title>
   <meta charset="utf-8">
-  <script src="libs/tiny.debug.js"></script>
-  <script src="../dist/index.debug.js"></script>
-  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2,minimum-scale=1,user-scalable=1">
-  <style type="text/css">
-    body,
-    html,
-    canvas {
-      padding: 0;
-      margin: 0;
-      -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
-    }
-  </style>
+  <title>tinyjs-plugin-p2 Demo</title>
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="yes" name="apple-touch-fullscreen" />
+  <meta content="telephone=no,email=no" name="format-detection" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+  <link href="https://as.alipayobjects.com/g/h5-lib/antui/9.9.0-2/rem/antui.css" rel="stylesheet" />
 </head>
 
 <body>
 
-  <script>
-    var config = {
-      showFPS: true, // 显示帧频
-      dpi: 1, // 分辨率
-      renderOptions: {
-        backgroundColor: 0x2a3145 // 画布背景色
-      }
-    };
-
-    var app = new Tiny.Application(config);
-    Tiny.Physics.P2.startSystem(app, {
-      gravity: [0, 9.82]
-    });
-
-    //  设置回弹系数 增加小人落到地上的回跳效果
-    app.physics.p2.restitution = 0.3;
-
-    init();
-
-    function createBox(app, width, height, color) {
-      let graphics = new Tiny.Graphics();
-      graphics.beginFill(color);
-      graphics.drawRect(0, 0, width, height);
-      graphics.bounds = new Tiny.Rectangle(0, 0, width, height);
-      var rt = Tiny.RenderTexture.create(width, height);
-      app.renderer.render(graphics, rt);
-      let sprite = new Tiny.Sprite(rt);
-      return sprite;
-    }
-
-    function init() {
-
-      container = new Tiny.Container();
-
-      var looptimes = 50;
-
-      function getColor() {
-        return 0x1000000 + Math.random() * 0x1000000;
-      }
-
-      var timer = setInterval(function () {
-        var sprite = createBox(app, 40, 40, getColor());
-        // var sprite = createBox(app, 40, 40, 0xffffff);
-        sprite.position.x = 50 + Math.floor(Math.random() * 200);
-        sprite.position.y = 100;
-        // sprite.scale.set(.5);
-
-        app.physics.p2.enable(sprite, true);
-
-        // sprite.body.angularVelocity = -10;
-        sprite.body.mass = 1;
-
-        sprite.body.setCircle(10);
-
-        container.addChild(sprite);
-
-        if (--looptimes <= 0) {
-          clearInterval(timer);
-        }
-      }, 1000);
-
-
-      sprite2 = createBox(app, 100, 50, 0xffffff);
-      sprite2.position.x = 100;
-      sprite2.position.y = 500;
-      app.physics.p2.enable(sprite2, true);
-
-      sprite2.body.static = true;
-      sprite2.body.on('shapeChanged', function (a) {
-        console.log('shapeChanged', a)
-      })
-
-      sprite2.body.on('beginContact', function (bodyB, shapeB, bodyA, shapeA) {
-        // console.log(bodyB, shapeB, bodyA, shapeA);
-        // bodyB.sprite.body.removeFromWorld();
-        // bodyB.sprite.parent.removeChild(bodyB.sprite);
-      });
-
-      container.addChild(sprite2);
-      app.run(container);
-    }
-  </script>
+  <div class="am-list">
+    <div class="am-list-header">Tiny.Physics.P2 - Examples</div>
+    <div class="am-list-body">
+      <a href="basic.html" class="am-list-item">
+        <div class="am-list-content">Basic Circle Body</div>
+        <div class="am-list-arrow"><span class="am-icon arrow horizontal"></span></div>
+      </a>
+      <a href="movement.html" class="am-list-item">
+        <div class="am-list-content">ant super man</div>
+        <div class="am-list-arrow"><span class="am-icon arrow horizontal"></span></div>
+      </a>
+      <a href="collision-groups.html" class="am-list-item">
+        <div class="am-list-content">Collision Groups</div>
+        <div class="am-list-arrow"><span class="am-icon arrow horizontal"></span></div>
+      </a>
+      <a href="mouse-spring.html" class="am-list-item">
+        <div class="am-list-content">mouse-spring</div>
+        <div class="am-list-arrow"><span class="am-icon arrow horizontal"></span></div>
+      </a>
+      <a href="mouse-spring2.html" class="am-list-item">
+        <div class="am-list-content">mouse-spring2</div>
+        <div class="am-list-arrow"><span class="am-icon arrow horizontal"></span></div>
+      </a>
+      <a href="polygon.html" class="am-list-item">
+        <div class="am-list-content">polygon shape</div>
+        <div class="am-list-arrow"><span class="am-icon arrow horizontal"></span></div>
+      </a>
+    </div>
+  </div>
 </body>
 
 </html>

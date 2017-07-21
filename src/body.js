@@ -2,12 +2,13 @@ import { default as InversePointProxy } from './InversePointProxy';
 import * as P2Math from './core/math';
 import { default as BodyDebug } from './BodyDebug';
 
-const p2 = require('./p2');
+const p2 = require('../libs/p2');
 /**
  * Dynamic body. Dynamic bodies body can move and respond to collisions and forces.
  * @property DYNAMIC
  * @type {Number}
  * @static
+ * @private
  */
 const DYNAMIC = 1;
 
@@ -16,19 +17,26 @@ const DYNAMIC = 1;
  * @property STATIC
  * @type {Number}
  * @static
+ * @private
  */
 const STATIC = 2;
 
 /**
-* @class Tiny.Physics.P2.Body
+* P2 Physics body
+* @class Body
 * @constructor
-* @param {Tiny.Physics.P2.World} world - world reference to the currently running world.
-* @param {Tiny.Sprite} [sprite] - The Sprite object this physics body belongs to.
-* @param {number} [x=0] - The x coordinate of this Body.
-* @param {number} [y=0] - The y coordinate of this Body.
-* @param {number} [mass=1] - The default mass of this Body (0 = static).
+* @memberof Tiny.Physics.P2
+* @extends Tiny.EventEmitter
 */
-export default class Body extends Tiny.EventEmitter {
+class Body extends Tiny.EventEmitter {
+  /**
+  * @constructor
+  * @param {Tiny.Physics.P2.World} world - world reference to the currently running world.
+  * @param {Tiny.Sprite} [sprite] - The Sprite object this physics body belongs to.
+  * @param {number} [x=0] - The x coordinate of this Body.
+  * @param {number} [y=0] - The y coordinate of this Body.
+  * @param {number} [mass=1] - The default mass of this Body (0 = static).
+   */
   constructor(world, sprite, x, y, mass) {
     super();
     sprite = sprite || null;
@@ -37,32 +45,38 @@ export default class Body extends Tiny.EventEmitter {
     if (mass === undefined) { mass = 1; }
 
     /**
-       * @property {Tiny.Physics.P2} world - Local reference to the P2 World.
-       */
+     * @name Tiny.Physics.P2.Body#world
+     * @property {Tiny.Physics.P2} world - Local reference to the P2 World.
+     */
     this.world = world;
 
     /**
+    * @name Tiny.Physics.P2.Body#app
     * @property {Tiny.Application} app - Local reference to app.
     */
     this.app = this.world.app;
 
     /**
+    * @name Tiny.Physics.P2.Body#sprite
     * @property {Tiny.Sprite} sprite - Reference to the parent Sprite.
     */
     this.sprite = sprite;
 
     /**
+    * @name Tiny.Physics.P2.Body#type
     * @property {number} type - The type of physics system this body belongs to.
     */
     this.type = 'Tiny.Physics.P2.Body';
 
     /**
+    * @name Tiny.Physics.P2.Body#type
     * @property {Tiny.Point} offset - The offset of the Physics Body from the Sprite x/y position.
     */
     this.offset = new Tiny.Point();
 
     /**
-    * @property {p2.Body} data - The p2 Body data.
+    * @name Tiny.Physics.P2.Body#data
+    * @property {p2.Body} data - 原始的p2.Body
     * @protected
     */
     this.data = new p2.Body({
@@ -73,15 +87,16 @@ export default class Body extends Tiny.EventEmitter {
     this.data.parent = this;
 
     /**
-    * @property {Tiny.Physics.P2.InversePointProxy} velocity - The velocity of the body. Set velocity.x to a negative value to move to the left, position to the right. velocity.y negative values move up, positive move down.
+    * @name Tiny.Physics.P2.Body#velocity
+    * @property {Tiny.Physics.P2.InversePointProxy} velocity - 速度。 将velocity.x设置为负值以向左移动，位置向右。 velocity.y为负值向上移动，正向下移动。
     */
     this.velocity = new InversePointProxy(this.world, this.data.velocity);
 
     /**
-    * 作用力。刚体在线性速度方向上收到的扭力
+    * @name Tiny.Physics.P2.Body#force
     * @property {Tiny.Physics.P2.InversePointProxy} force - The force applied to the body.
     */
-    this.force = new InversePointProxy(this.world, this.data.force);
+    this.force = new InversePointProxy(this.world, this.data.force);//作用力。刚体在线性速度方向上收到的扭力
 
     /**
     * @property {array} collidesWith - Array of CollisionGroups that this Bodies shapes collide with.
@@ -863,14 +878,11 @@ export default class Body extends Tiny.EventEmitter {
 
   /**
    * 具体参考p2.body.type 以下注释从p2代码注释中拷贝过来
-   * The type of motion this body has. Should be one of: {{#crossLink "Body/STATIC:property"}}Body.STATIC{{/crossLink}}, {{#crossLink "Body/DYNAMIC:property"}}Body.DYNAMIC{{/crossLink}} and {{#crossLink "Body/KINEMATIC:property"}}Body.KINEMATIC{{/crossLink}}.
-   *
    * * Static bodies do not move, and they do not respond to forces or collision.
    * * Dynamic bodies body can move and respond to collisions and forces.
    * * Kinematic bodies only moves according to its .velocity, and does not respond to collisions or force.
    *
-   * @property type
-   * @type {number} value  - default is true
+   * @property {number} value  - default is true
    */
   set static(value) {
     if (value && this.data.type !== STATIC) {
@@ -1169,3 +1181,5 @@ export default class Body extends Tiny.EventEmitter {
     }
   }
 }
+
+export default Body;

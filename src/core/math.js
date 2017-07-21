@@ -1,7 +1,9 @@
 /**
 * Keeps an angle value between -180 and +180; or -PI and PI if radians.
-*
-* @method Tiny.Physics.Math#wrapAngle
+* @function
+* @static
+* @name wrapAngle
+* @memberof Tiny.Physics.P2.Math
 * @param {number} angle - The angle value to wrap
 * @param {boolean} [radians=false] - Set to `true` if the angle is given in radians, otherwise degrees is expected.
 * @return {number} The new angle value; will be the same as the input angle if it was within bounds.
@@ -14,8 +16,10 @@ export function wrapAngle(angle, radians) {
 * Ensures that the value always stays between min and max, by wrapping the value around.
 *
 * If `max` is not larger than `min` the result is 0.
-*
-* @method Tiny.Physics.Math#wrap
+* @function
+* @static
+* @name wrap
+* @memberof Tiny.Physics.P2.Math
 * @param {number} value - The value to wrap.
 * @param {number} min - The minimum the value is allowed to be.
 * @param {number} max - The maximum the value is allowed to be, should be larger than `min`.
@@ -42,8 +46,10 @@ const radianToDegreesFactor = 180 / Math.PI;
 
 /**
 * Convert degrees to radians.
-*
-* @method Tiny.Physics.P2..Math#degToRad
+* @function
+* @static
+* @name degToRad
+* @memberof Tiny.Physics.P2.Math
 * @param {number} degrees - Angle in degrees.
 * @return {number} Angle in radians.
 */
@@ -53,8 +59,10 @@ export function degToRad(degrees) {
 
 /**
 * Convert radians to degrees.
-*
-* @method Tiny.Physics.Math#radToDeg
+* @function
+* @static
+* @name radToDeg
+* @memberof Tiny.Physics.P2.Math
 * @param {number} radians - Angle in radians.
 * @return {number} Angle in degrees
 */
@@ -65,7 +73,10 @@ export function radToDeg(radians) {
 /**
 * Returns the euclidian distance between the two given set of coordinates.
 *
-* @method Tiny.Physics.Math#distance
+* @function
+* @static
+* @name distance
+* @memberof Tiny.Physics.P2.Math
 * @param {number} x1
 * @param {number} y1
 * @param {number} x2
@@ -79,7 +90,11 @@ export function distance(x1, y1, x2, y2) {
 }
 
 /**
- * 两点之间的角度
+* 两点之间的角度
+* @function
+* @static
+* @name angle
+* @memberof Tiny.Physics.P2.Math
 * @param {number} x1
 * @param {number} y1
 * @param {number} x2
@@ -92,8 +107,10 @@ export function angle(x1, y1, x2, y2) {
 
 /**
 * Force a value within the boundaries by clamping it to the range `min`, `max`.
-*
-* @method Tiny.Physics.Math#clamp
+* @function
+* @static
+* @name clamp
+* @memberof Tiny.Physics.P2.Math
 * @param {float} v - The value to be clamped.
 * @param {float} min - The minimum bounds.
 * @param {float} max - The maximum bounds.
@@ -102,11 +119,9 @@ export function angle(x1, y1, x2, y2) {
 export function clamp(v, min, max) {
   if (v < min) {
     return min;
-  }
-  else if (max < v) {
+  } else if (max < v) {
     return max;
-  }
-  else {
+  } else {
     return v;
   }
 }

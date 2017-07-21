@@ -1,17 +1,23 @@
-const p2 = require('./p2');
+const p2 = require('../libs/p2');
 /**
 * Locks the relative position between two bodies.
 *
 * @class Tiny.Physics.P2.LockConstraint
 * @constructor
-* @param {Tiny.Physics.P2} world - A reference to the P2 World.
-* @param {p2.Body} bodyA - First connected body.
-* @param {p2.Body} bodyB - Second connected body.
-* @param {Array} [offset] - The offset of bodyB in bodyA's frame. The value is an array with 2 elements matching x and y, i.e: [32, 32].
-* @param {number} [angle=0] - The angle of bodyB in bodyA's frame.
-* @param {number} [maxForce] - The maximum force that should be applied to constrain the bodies.
+* @memberof Tiny.Physics.P2
+* @extends p2.LockConstraint
+* @see p2.LockConstraint
 */
-export default class LockConstraint extends p2.LockConstraint {
+class LockConstraint extends p2.LockConstraint {
+  /**
+  * @constructor
+  * @param {Tiny.Physics.P2.World} world - world reference to the currently running world.
+  * @param {p2.Body} bodyA - First connected body.
+  * @param {p2.Body} bodyB - Second connected body.
+  * @param {Array} [offset] - The offset of bodyB in bodyA's frame. The value is an array with 2 elements matching x and y, i.e: [32, 32].
+  * @param {number} [angle=0] - The angle of bodyB in bodyA's frame.
+  * @param {number} [maxForce] - The maximum force that should be applied to constrain the bodies.
+  */
   constructor(world, bodyA, bodyB, offset = [0, 0], angle = 0, maxForce = Number.MAX_VALUE) {
     offset = [world.pxm(offset[0]), world.pxm(offset[1])];
 
@@ -34,3 +40,5 @@ export default class LockConstraint extends p2.LockConstraint {
     this.world = world;
   }
 }
+
+export default LockConstraint;

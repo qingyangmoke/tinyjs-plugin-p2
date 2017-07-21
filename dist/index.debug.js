@@ -1,7 +1,7 @@
 /*!
  * Tiny.Physics.P2
  * Description: P2物理引擎，从Phaser的p2的改造过来的 感谢Phaser提供的解决方案
- * Author: 清扬陌客 <qingyangmoke@qq.com>
+ * Author: 采东 <qingyangmoke@qq.com>
  * Version: v0.0.3
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -72,25 +72,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.p2 = exports.EVENTS = exports.Math = exports.startSystem = undefined;
+	exports.p2 = exports.ContactMaterial = exports.Material = exports.PrismaticConstraint = exports.RevoluteConstraint = exports.GearConstraint = exports.DistanceConstraint = exports.LockConstraint = exports.RotationalSpring = exports.Spring = exports.InversePointProxy = exports.CollisionGroup = exports.Group = exports.Body = exports.EVENTS = exports.Math = exports.startSystem = undefined;
 
-	var _utils = __webpack_require__(2);
-
-	Object.keys(_utils).forEach(function (key) {
-	  if (key === "default" || key === "__esModule") return;
-	  Object.defineProperty(exports, key, {
-	    enumerable: true,
-	    get: function get() {
-	      return _utils[key];
-	    }
-	  });
-	});
-
-	var _world = __webpack_require__(3);
+	var _world = __webpack_require__(2);
 
 	var _world2 = _interopRequireDefault(_world);
 
-	var _math = __webpack_require__(6);
+	var _math = __webpack_require__(5);
 
 	var Math = _interopRequireWildcard(_math);
 
@@ -98,13 +86,114 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var EVENTS = _interopRequireWildcard(_EVENTS);
 
+	var _body = __webpack_require__(3);
+
+	var _body2 = _interopRequireDefault(_body);
+
+	var _Group = __webpack_require__(60);
+
+	var _Group2 = _interopRequireDefault(_Group);
+
+	var _CollisionGroup = __webpack_require__(61);
+
+	var _CollisionGroup2 = _interopRequireDefault(_CollisionGroup);
+
+	var _InversePointProxy = __webpack_require__(4);
+
+	var _InversePointProxy2 = _interopRequireDefault(_InversePointProxy);
+
+	var _Spring = __webpack_require__(62);
+
+	var _Spring2 = _interopRequireDefault(_Spring);
+
+	var _RotationalSpring = __webpack_require__(63);
+
+	var _RotationalSpring2 = _interopRequireDefault(_RotationalSpring);
+
+	var _LockConstraint = __webpack_require__(64);
+
+	var _LockConstraint2 = _interopRequireDefault(_LockConstraint);
+
+	var _DistanceConstraint = __webpack_require__(65);
+
+	var _DistanceConstraint2 = _interopRequireDefault(_DistanceConstraint);
+
+	var _GearConstraint = __webpack_require__(66);
+
+	var _GearConstraint2 = _interopRequireDefault(_GearConstraint);
+
+	var _RevoluteConstraint = __webpack_require__(67);
+
+	var _RevoluteConstraint2 = _interopRequireDefault(_RevoluteConstraint);
+
+	var _PrismaticConstraint = __webpack_require__(68);
+
+	var _PrismaticConstraint2 = _interopRequireDefault(_PrismaticConstraint);
+
+	var _Material = __webpack_require__(69);
+
+	var _Material2 = _interopRequireDefault(_Material);
+
+	var _ContactMaterial = __webpack_require__(70);
+
+	var _ContactMaterial2 = _interopRequireDefault(_ContactMaterial);
+
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var p2 = __webpack_require__(8);
+	// export * from './utils';
+
+	var p2 = __webpack_require__(8); /*
+	                                 * Name: Tiny.Physics.Ant
+	                                 * Description: P2物理引擎
+	                                 * Author: fusheng.sfs
+	                                 */
+
+	/**
+	* Tiny.js
+	* @external Tiny
+	* @see {@link http://tinyjs.net/}
+	*/
+
+	/**
+	* p2.js
+	* @external p2
+	* @see {@link https://github.com/schteppe/p2.js}
+	*/
+
+	/**
+	* phaser.io
+	* @external phaser
+	* @see {@link https://github.com/photonstorm/phaser}
+	*/
+
+	/**
+	 * @namespace Tiny
+	 */
+
+	/**
+	 * @namespace Physics
+	 * @memberof Tiny
+	 */
+
+	/**
+	* @namespace P2
+	* @memberof Tiny.Physics
+	*/
+
+	/**
+	 * @class Math
+	 * @memberof Tiny.Physics.P2
+	 */
 
 	var system = null;
+	/**
+	 * 启用ant物理系统
+	 * @method Tiny.Physics.P2#startSystem
+	 * @param {Tiny.Application} app
+	 * @param {object} config
+	 */
 	function startSystem(app, config) {
 	  if (system === null) {
 	    system = new _world2.default(app, config);
@@ -173,87 +262,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.startSystem = startSystem;
 	exports.Math = Math;
 	exports.EVENTS = EVENTS;
+	exports.Body = _body2.default;
+	exports.Group = _Group2.default;
+	exports.CollisionGroup = _CollisionGroup2.default;
+	exports.InversePointProxy = _InversePointProxy2.default;
+	exports.Spring = _Spring2.default;
+	exports.RotationalSpring = _RotationalSpring2.default;
+	exports.LockConstraint = _LockConstraint2.default;
+	exports.DistanceConstraint = _DistanceConstraint2.default;
+	exports.GearConstraint = _GearConstraint2.default;
+	exports.RevoluteConstraint = _RevoluteConstraint2.default;
+	exports.PrismaticConstraint = _PrismaticConstraint2.default;
+	exports.Material = _Material2.default;
+	exports.ContactMaterial = _ContactMaterial2.default;
 	exports.p2 = p2;
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.extend = extend;
-	exports.randomPastelHex = randomPastelHex;
-	exports.rgbToHex = rgbToHex;
-	exports.componentToHex = componentToHex;
-	/**
-	* This is a slightly modified version of http://api.jquery.com/jQuery.extend/
-	*
-	* @method Tiny.Physics.P2.Utils.extend
-	* @param {boolean} deep - Perform a deep copy?
-	* @param {object} target - The target object to copy to.
-	* @return {object} The extended object.
-	*/
-	function extend(a, b) {
-	  for (var key in b) {
-	    a[key] = b[key];
-	  }
-	  return a;
-	};
-
-	/**
-	  * Picks a random pastel color.
-	  *
-	  * @method Tiny.Physics.P2.BodyDebug#randomPastelHex
-	  * @private
-	  */
-	function randomPastelHex() {
-	  var blue = void 0,
-	      green = void 0,
-	      mix = void 0,
-	      red = void 0;
-	  mix = [255, 255, 255];
-
-	  red = Math.floor(Math.random() * 256);
-	  green = Math.floor(Math.random() * 256);
-	  blue = Math.floor(Math.random() * 256);
-
-	  red = Math.floor((red + 3 * mix[0]) / 4);
-	  green = Math.floor((green + 3 * mix[1]) / 4);
-	  blue = Math.floor((blue + 3 * mix[2]) / 4);
-
-	  return rgbToHex(red, green, blue);
-	}
-
-	/**
-	  * Converts from RGB to Hex.
-	  *
-	  * @method Tiny.Physics.P2.BodyDebug#rgbToHex
-	  * @private
-	  */
-	function rgbToHex(r, g, b) {
-	  return componentToHex(r) + componentToHex(g) + componentToHex(b);
-	}
-
-	/**
-	* Component to hex conversion.
-	*
-	* @method Tiny.Physics.P2.BodyDebug#componentToHex
-	* @private
-	*/
-	function componentToHex(c) {
-	  var hex = c.toString(16);
-	  if (hex.length === 2) {
-	    return hex;
-	  } else {
-	    return hex + '0';
-	  }
-	}
-
-/***/ }),
-/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -264,19 +289,19 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _body = __webpack_require__(4);
+	var _body = __webpack_require__(3);
 
 	var _body2 = _interopRequireDefault(_body);
 
-	var _Container = __webpack_require__(60);
+	var _Group = __webpack_require__(60);
 
-	var _Container2 = _interopRequireDefault(_Container);
+	var _Group2 = _interopRequireDefault(_Group);
 
 	var _CollisionGroup = __webpack_require__(61);
 
 	var _CollisionGroup2 = _interopRequireDefault(_CollisionGroup);
 
-	var _InversePointProxy = __webpack_require__(5);
+	var _InversePointProxy = __webpack_require__(4);
 
 	var _InversePointProxy2 = _interopRequireDefault(_InversePointProxy);
 
@@ -332,10 +357,22 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var BODY_TYPE = 'Tiny.Physics.P2.Body';
 	var p2 = __webpack_require__(8);
+	/**
+	 * P2 physics world
+	 *
+	 * @constructor
+	 * @memberof Tiny.Physics.P2
+	 * @extends Tiny.EventEmitter
+	 */
 
 	var World = function (_Tiny$EventEmitter) {
 	  _inherits(World, _Tiny$EventEmitter);
 
+	  /**
+	  * @constructor
+	  * @param {Tiny.Application} app - app reference to the currently running tiny application.
+	  * @param {object} config
+	  */
 	  function World(app, config) {
 	    _classCallCheck(this, World);
 
@@ -488,6 +525,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return _this;
 	  }
 
+	  /**
+	  * This will create a P2 Physics body on the given object or array of objects.
+	  * A object can only have 1 physics body active at any one time, and it can't be changed until the object is destroyed.
+	  * Note: When the object is enabled for P2 physics it has its anchor x/y set to 0.5 so it becomes centered.
+	  *
+	  * @method Tiny.Physics.P2.World#enable
+	  * @param {object|array|Tiny.Physics.P2.Group} object - The object to create the physics body on. Can also be an array or Group of objects, a body will be created on every child that has a `body` property.
+	  * @param {boolean} [debug=false] - Create a debug object to go with this body?
+	  * @param {boolean} [children=true] - Should a body be created on all children of this object? If true it will recurse down the display list as far as it can go.
+	  */
+
+
 	  _createClass(World, [{
 	    key: 'enable',
 	    value: function enable(object, debug, children) {
@@ -504,7 +553,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        i = object.length;
 
 	        while (i--) {
-	          if (object[i] instanceof _Container2.default) {
+	          if (object[i] instanceof _Group2.default) {
 	            this.enable(object[i].children, debug, children);
 	          } else {
 	            this.enableBody(object[i], debug);
@@ -519,7 +568,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          // }
 	        }
 	      } else {
-	        if (object instanceof _Container2.default) {
+	        if (object instanceof _Group2.default) {
 	          this.enable(object.children, debug, children);
 	        } else {
 	          this.enableBody(object, debug);
@@ -534,10 +583,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	        // }
 	      }
 	    }
+
+	    /**
+	    * Creates a P2 Physics body on the given object.
+	    * A object can only have 1 physics body active at any one time, and it can't be changed until the body is nulled.
+	    *
+	    * @method Tiny.Physics.P2.World#enableBody
+	    * @param {object} object - The object to create the physics body on. A body will only be created if this object has a null `body` property.
+	    * @param {boolean} debug - Create a debug object to go with this body?
+	    */
+
 	  }, {
 	    key: 'enableBody',
 	    value: function enableBody(object, debug) {
-	      console.log('enableBody', object.body);
+	      // console.log('enableBody', object.body);
 	      if (object.body === void 0) {
 	        object.body = new _body2.default(this, object, object.x, object.y, 1);
 	        object.body.debug = debug;
@@ -550,12 +609,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
-	     * Add a body to the world.
-	     *
-	     * @method Tiny.Physics.P2#addBody
-	     * @param {Tiny.Physics.P2.Body} body - The Body to add to the World.
-	     * @return {boolean} True if the Body was added successfully, otherwise false.
-	     */
+	    * Add a body to the world.
+	    *
+	    * @method Tiny.Physics.P2.World#addBody
+	    * @param {Tiny.Physics.P2.Body} body - The Body to add to the World.
+	    * @return {boolean} True if the Body was added successfully, otherwise false.
+	    */
 
 	  }, {
 	    key: 'addBody',
@@ -579,6 +638,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return true;
 	      }
 	    }
+
+	    /**
+	    * @private
+	    */
+
 	  }, {
 	    key: 'preUpdate',
 	    value: function preUpdate() {
@@ -588,6 +652,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	      this._toRemove.length = 0;
 	    }
+
+	    /**
+	    * @private
+	    */
+
 	  }, {
 	    key: 'update',
 	    value: function update() {
@@ -605,7 +674,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
-	     * 检查是否安装
+	     * check if p2 physics system is setup
+	     * @method Tiny.Physics.P2.World#checkIfSetup
 	     */
 
 	  }, {
@@ -615,6 +685,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	        throw new Error('引擎未setup');
 	      }
 	    }
+
+	    /**
+	    * Clears all bodies from the simulation, resets callbacks and resets the collision bitmask.
+	    *
+	    * The P2 world is also cleared:
+	    *
+	    * * Removes all solver equations
+	    * * Removes all constraints
+	    * * Removes all bodies
+	    * * Removes all springs
+	    * * Removes all contact materials
+	    *
+	    * This is called automatically when you switch state.
+	    *
+	    * @method Tiny.Physics.P2.World#clear
+	    */
+
 	  }, {
 	    key: 'clear',
 	    value: function clear() {
@@ -668,6 +755,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	      //  Remove the world bounds
 	      this.walls = { left: null, right: null, top: null, bottom: null };
 	    }
+
+	    /**
+	     * Starts the begin and end Contact listeners again.
+	     *
+	     * @method Tiny.Physics.P2.World#reset
+	     */
+
 	  }, {
 	    key: 'reset',
 	    value: function reset() {
@@ -682,6 +776,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      this.setBoundsToWorld(true, true, true, true, false);
 	    }
+
+	    /**
+	    * Clears all bodies from the simulation and unlinks World from Game. Should only be called on game shutdown. Call `clear` on a State change.
+	    *
+	    * @method Tiny.Physics.P2.World#destroy
+	    */
+
 	  }, {
 	    key: 'destroy',
 	    value: function destroy() {
@@ -693,10 +794,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
-	     * 触发指定事件事件
-	     * @param {String} eventName
-	     * @param {any} eventData
-	     */
+	    * fire event
+	    * @private
+	    * @method Tiny.Physics.P2.World#dispatch
+	    * @param {String} eventName
+	    * @param {any} eventData
+	    */
 
 	  }, {
 	    key: 'dispatch',
@@ -710,10 +813,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
-	     * pixi 转 p2
-	     * @param {Number} v - Tiny系统数值单位
-	     * @return {Number} - p2系统数值单位
-	     */
+	    * Convert pixel value to p2 physics scale (meters).
+	    * By default uses a scale of 20px per meter.
+	    * If you need to modify this you can over-ride these functions via the Physics Configuration object.
+	    *
+	    * @method Tiny.Physics.P2.World#pxm
+	    * @param {number} v - The value to convert.
+	    * @return {number} The scaled value.
+	    */
 
 	  }, {
 	    key: 'pxm',
@@ -722,10 +829,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
-	     * pixi 转 p2 在取反
-	     * @param {Number} v - Tiny系统数值单位
-	     * @return {Number} - p2系统数值单位
-	     */
+	    * Convert tiny value to p2 physics scale (meters) and inverses it.
+	    * By default uses a scale of 20px per meter.
+	    * If you need to modify this you can over-ride these functions via the Physics Configuration object.
+	    *
+	    * @method Tiny.Physics.P2.World#pxmi
+	    * @param {number} v - The value to convert.
+	    * @return {number} The scaled value.
+	    */
 
 	  }, {
 	    key: 'pxmi',
@@ -734,10 +845,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
-	     * p2 转 pixi
-	     * @param {Number} v  - 要转换的p2系统单位
-	     * @return {Number} - Tiny系统单位
-	     */
+	    * Convert p2 physics value (meters) to pixel scale.
+	    * By default uses a scale of 20px per meter.
+	    * If you need to modify this you can over-ride these functions via the Physics Configuration object.
+	    *
+	    * @method Tiny.Physics.P2.World#mpx
+	    * @param {number} v - The value to convert.
+	    * @return {number} The scaled value.
+	    */
 
 	  }, {
 	    key: 'mpx',
@@ -746,10 +861,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
-	     * p2 转 pixi 在取反
-	     * @param {Number} v - 要转换的p2系统单位
-	     * @return {Number} - Tiny系统单位
-	     */
+	    * Convert p2 physics value (meters) to pixel scale and inverses it.
+	    * By default uses a scale of 20px per meter.
+	    * If you need to modify this you can over-ride these functions via the Physics Configuration object.
+	    *
+	    * @method Tiny.Physics.P2.World#mpxi
+	    * @param {number} v - The value to convert.
+	    * @return {number} The scaled value.
+	    */
 
 	  }, {
 	    key: 'mpxi',
@@ -758,20 +877,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
-	     * 放到延迟删除临时队列
-	     * @param {Tiny.Physics.P2.Body} body - 要延迟到下一次渲染删除的Body对象
-	     */
+	    * This will add a P2 Physics body into the removal list for the next step.
+	    *
+	    * @method Tiny.Physics.P2.World#removeBodyNextStep
+	    * @param {Tiny.Physics.P2.Body} body - The body to remove at the start of the next step.
+	    */
 
 	  }, {
 	    key: 'removeBodyNextStep',
 	    value: function removeBodyNextStep(body) {
+	      // 放到延迟删除临时队列 body - 要延迟到下一次渲染删除的Body对象
 	      this._toRemove.push(body);
 	    }
 
 	    /**
 	      * Removes a body from the world. This will silently fail if the body wasn't part of the world to begin with.
 	      *
-	      * @method Tiny.Physics.P2#removeBody
+	      * @method Tiny.Physics.P2.World#removeBody
 	      * @param {Tiny.Physics.P2.Body} body - The Body to remove from the World.
 	      * @return {Tiny.Physics.P2.Body} The Body that was removed.
 	      */
@@ -791,18 +913,18 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 	    /**
-	     * 恢复已暂停的p2.world
+	     * Pauses the P2 World independent of the game pause state.
 	     *
-	     * @method Tiny.Physics.P2#resume
+	     * @method Tiny.Physics.P2.World#resume
 	     */
 	    value: function pause() {
 	      this._paused = true;
 	    }
 
 	    /**
-	    * 恢复已暂停的p2.world
+	    * Resumes a paused P2 World.
 	    *
-	    * @method Tiny.Physics.P2#resume
+	    * @method Tiny.Physics.P2.World#resume
 	    */
 
 	  }, {
@@ -812,9 +934,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
-	     * 处理p2的 beginContact事件.
+	     * Handles a p2 begin contact event.
 	     *
-	     * @method Tiny.Physics.P2#beginContactHandler
+	     * @method Tiny.Physics.P2.World#beginContactHandler
 	     * @param {object} event - The p2 event data.
 	     */
 
@@ -843,7 +965,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    /**
 	     * Handles a p2 end contact event.
 	     *
-	     * @method Tiny.Physics.P2#endContactHandler
+	     * @method Tiny.Physics.P2.World#endContactHandler
 	     * @param {object} event - The event data.
 	     */
 
@@ -871,7 +993,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    /**
 	    * Creates a new Body and adds it to the World.
 	    *
-	    * @method Tiny.Physics.P2#createBody
+	    * @method Tiny.Physics.P2.World#createBody
 	    * @param {number} x - The x coordinate of Body.
 	    * @param {number} y - The y coordinate of Body.
 	    * @param {number} mass - The mass of the Body. A mass of 0 means a 'static' Body is created.
@@ -909,7 +1031,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    * Sets the bounds of the Physics world to match the Game.World dimensions.
 	    * You can optionally set which 'walls' to create: left, right, top or bottom.
 	    *
-	    * @method Tiny.Physics#setBoundsToWorld
+	    * @method Tiny.Physics.P2.World#setBoundsToWorld
 	    * @param {boolean} [left=true] - If true will create the left bounds wall.
 	    * @param {boolean} [right=true] - If true will create the right bounds wall.
 	    * @param {boolean} [top=true] - If true will create the top bounds wall.
@@ -931,7 +1053,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    * the newly created bounds will also not have the left and right walls.
 	    * Explicitly state them in the parameters to override this.
 	    *
-	    * @method Tiny.Physics.P2#setBounds
+	    * @method Tiny.Physics.P2.World#setBounds
 	    * @param {number} x - The x coordinate of the top-left corner of the bounds.
 	    * @param {number} y - The y coordinate of the top-left corner of the bounds.
 	    * @param {number} width - The width of the bounds.
@@ -979,7 +1101,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * Internal method called by setBounds. Responsible for creating, updating or
 	     * removing the wall body shapes.
 	     *
-	     * @method Tiny.Physics.P2#setupWall
+	     * @method Tiny.Physics.P2.World#setupWall
 	     * @private
 	     * @param {boolean} create - True to create the wall shape, false to remove it.
 	     * @param {string} wall - The wall segment to update.
@@ -1022,7 +1144,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    /**
 	    * Sets the given material against the 4 bounds of this World.
 	    *
-	    * @method Tiny.Physics#setWorldMaterial
+	    * @method Tiny.Physics.P2.World#setWorldMaterial
 	    * @param {Tiny.Physics.P2.Material} material - The material to set.
 	    * @param {boolean} [left=true] - If true will set the material on the left bounds wall.
 	    * @param {boolean} [right=true] - If true will set the material on the right bounds wall.
@@ -1060,7 +1182,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * If you start to use your own collision groups then your objects will no longer collide with the bounds.
 	     * To fix this you need to adjust the bounds to use its own collision group first BEFORE changing your Sprites collision group.
 	     *
-	     * @method Tiny.Physics.P2#updateBoundsCollisionGroup
+	     * @method Tiny.Physics.P2.World#updateBoundsCollisionGroup
 	     * @param {boolean} [setCollisionGroup=true] - If true the Bounds will be set to use its own Collision Group.
 	     */
 
@@ -1091,10 +1213,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
-	    * 参考 p2.world toJSON.
+	    * A JSON representation of the world.
 	    *
-	    * @method Tiny.Physics.P2#toJSON
+	    * @method Tiny.Physics.P2.World#toJSON
 	    * @return {object} A JSON representation of the world.
+	    * @see p2.world#toJSON.
 	    */
 
 	  }, {
@@ -1104,8 +1227,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
-	    * 摩擦系数 - 对应于 p2.world.defaultContactMaterial.friction
-	    * @name Tiny.Physics.P2#friction
+	    * @name Tiny.Physics.P2.World#friction
 	    * @property {number} friction - Friction between colliding bodies. This value is used if no matching ContactMaterial is found for a Material pair.
 	    */
 
@@ -1114,16 +1236,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 	    /**
-	     * Test if a world point overlaps bodies. You will get an array of actual P2 bodies back. You can find out which Sprite a Body belongs to
-	     * (if any) by checking the Body.parent.sprite property. Body.parent is a Tiny.Physics.P2.Body property.
-	     *
-	     * @method Tiny.Physics.P2#hitTest
-	     * @param {Tiny.Point} worldPoint - Point to use for intersection tests. The points values must be in world (pixel) coordinates.
-	     * @param {Array<Tiny.Physics.P2.Body|Tiny.Sprite|p2.Body>} [bodies] - A list of objects to check for intersection. If not given it will check Tiny.Physics.P2.world.bodies (i.e. all world bodies)
-	     * @param {number} [precision=5] - Used for matching against particles and lines. Adds some margin to these infinitesimal objects.
-	     * @param {boolean} [filterStatic=false] - If true all Static objects will be removed from the results array.
-	     * @return {Array} Array of bodies that overlap the point.
-	     */
+	    * Test if a world point overlaps bodies. You will get an array of actual P2 bodies back. You can find out which Sprite a Body belongs to
+	    * (if any) by checking the Body.parent.sprite property. Body.parent is a Tiny.Physics.P2.Body property.
+	    *
+	    * @method Tiny.Physics.P2.World#hitTest
+	    * @param {Tiny.Point} worldPoint - Point to use for intersection tests. The points values must be in world (pixel) coordinates.
+	    * @param {Array<Tiny.Physics.P2.Body|Tiny.Sprite|p2.Body>} [bodies] - A list of objects to check for intersection. If not given it will check Tiny.Physics.P2.world.bodies (i.e. all world bodies)
+	    * @param {number} [precision=5] - Used for matching against particles and lines. Adds some margin to these infinitesimal objects.
+	    * @param {boolean} [filterStatic=false] - If true all Static objects will be removed from the results array.
+	    * @return {Array} Array of bodies that overlap the point.
+	    */
 	    value: function hitTest(worldPoint, bodies, precision, filterStatic) {
 	      if (bodies === undefined) {
 	        bodies = this.world.bodies;
@@ -1153,12 +1275,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
-	     * Checks the given object to see if it has a p2.Body and if so returns it.
-	     *
-	     * @method Tiny.Physics.P2#getBody
-	     * @param {object} object - The object to check for a p2.Body on.
-	     * @return {p2.Body} The p2.Body, or null if not found.
-	     */
+	    * Checks the given object to see if it has a p2.Body and if so returns it.
+	    *
+	    * @method Tiny.Physics.P2.World#getBody
+	    * @param {object} object - The object to check for a p2.Body on.
+	    * @return {p2.Body} The p2.Body, or null if not found.
+	    */
 
 	  }, {
 	    key: 'getBody',
@@ -1179,7 +1301,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    /**
 	    * Populates and returns an array with references to of all current Bodies in the world.
 	    *
-	    * @method Tiny.Physics.P2#getBodies
+	    * @method Tiny.Physics.P2.World#getBodies
 	    * @return {array<Tiny.Physics.P2.Body>} An array containing all current Bodies in the world.
 	    */
 
@@ -1195,12 +1317,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
-	     * Adds a Spring to the world.
-	     *
-	     * @method Tiny.Physics.P2#addSpring
-	     * @param {Tiny.Physics.P2.Spring|p2.LinearSpring|p2.RotationalSpring} spring - The Spring to add to the World.
-	     * @return {Tiny.Physics.P2.Spring} The Spring that was added.
-	     */
+	    * Adds a Spring to the world.
+	    *
+	    * @method Tiny.Physics.P2.World#addSpring
+	    * @param {Tiny.Physics.P2.Spring|p2.LinearSpring|p2.RotationalSpring} spring - The Spring to add to the World.
+	    * @return {Tiny.Physics.P2.Spring} The Spring that was added.
+	    */
 
 	  }, {
 	    key: 'addSpring',
@@ -1215,20 +1337,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
-	     * Creates a linear spring, connecting two bodies. A spring can have a resting length, a stiffness and damping.
-	     *
-	     * @method Tiny.Physics.P2#createSpring
-	     * @param {Tiny.Sprite|Tiny.Physics.P2.Body|p2.Body} bodyA - First connected body.
-	     * @param {Tiny.Sprite|Tiny.Physics.P2.Body|p2.Body} bodyB - Second connected body.
-	     * @param {number} [restLength=1] - Rest length of the spring. A number > 0.
-	     * @param {number} [stiffness=100] - Stiffness of the spring. A number >= 0.
-	     * @param {number} [damping=1] - Damping of the spring. A number >= 0.
-	     * @param {Array} [worldA] - Where to hook the spring to body A in world coordinates. This value is an array by 2 elements, x and y, i.e: [32, 32].
-	     * @param {Array} [worldB] - Where to hook the spring to body B in world coordinates. This value is an array by 2 elements, x and y, i.e: [32, 32].
-	     * @param {Array} [localA] - Where to hook the spring to body A in local body coordinates. This value is an array by 2 elements, x and y, i.e: [32, 32].
-	     * @param {Array} [localB] - Where to hook the spring to body B in local body coordinates. This value is an array by 2 elements, x and y, i.e: [32, 32].
-	     * @return {Tiny.Physics.P2.Spring} The spring
-	     */
+	    * Creates a linear spring, connecting two bodies. A spring can have a resting length, a stiffness and damping.
+	    *
+	    * @method Tiny.Physics.P2.World#createSpring
+	    * @param {Tiny.Sprite|Tiny.Physics.P2.Body|p2.Body} bodyA - First connected body.
+	    * @param {Tiny.Sprite|Tiny.Physics.P2.Body|p2.Body} bodyB - Second connected body.
+	    * @param {number} [restLength=1] - Rest length of the spring. A number > 0.
+	    * @param {number} [stiffness=100] - Stiffness of the spring. A number >= 0.
+	    * @param {number} [damping=1] - Damping of the spring. A number >= 0.
+	    * @param {Array} [worldA] - Where to hook the spring to body A in world coordinates. This value is an array by 2 elements, x and y, i.e: [32, 32].
+	    * @param {Array} [worldB] - Where to hook the spring to body B in world coordinates. This value is an array by 2 elements, x and y, i.e: [32, 32].
+	    * @param {Array} [localA] - Where to hook the spring to body A in local body coordinates. This value is an array by 2 elements, x and y, i.e: [32, 32].
+	    * @param {Array} [localB] - Where to hook the spring to body B in local body coordinates. This value is an array by 2 elements, x and y, i.e: [32, 32].
+	    * @return {Tiny.Physics.P2.Spring} The spring
+	    */
 
 	  }, {
 	    key: 'createSpring',
@@ -1245,7 +1367,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    /**
 	    * Creates a rotational spring, connecting two bodies. A spring can have a resting length, a stiffness and damping.
 	    *
-	    * @method Tiny.Physics.P2#createRotationalSpring
+	    * @method Tiny.Physics.P2.World#createRotationalSpring
 	    * @param {Tiny.Sprite|Tiny.Physics.P2.Body|p2.Body} bodyA - First connected body.
 	    * @param {Tiny.Sprite|Tiny.Physics.P2.Body|p2.Body} bodyB - Second connected body.
 	    * @param {number} [restAngle] - The relative angle of bodies at which the spring is at rest. If not given, it's set to the current relative angle between the bodies.
@@ -1269,7 +1391,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    /**
 	    * Removes a Spring from the world.
 	    *
-	    * @method Tiny.Physics.P2#removeSpring
+	    * @method Tiny.Physics.P2.World#removeSpring
 	    * @param {Tiny.Physics.P2.Spring} spring - The Spring to remove from the World.
 	    * @return {Tiny.Physics.P2.Spring} The Spring that was removed.
 	    */
@@ -1289,7 +1411,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    /**
 	    * Populates and returns an array of all current Springs in the world.
 	    *
-	    * @method Tiny.Physics.P2#getSprings
+	    * @method Tiny.Physics.P2.World#getSprings
 	    * @return {array<Tiny.Physics.P2.Spring>} An array containing all current Springs in the world.
 	    */
 
@@ -1309,7 +1431,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    * You will get an array of p2 constraints back. This can be of mixed types, for example the array may contain
 	    * PrismaticConstraints, RevoluteConstraints or any other valid p2 constraint type.
 	    *
-	    * @method Tiny.Physics.P2#getConstraints
+	    * @method Tiny.Physics.P2.World#getConstraints
 	    * @return {array<Tiny.Physics.P2.Constraint>} An array containing all current Constraints in the world.
 	    */
 
@@ -1327,7 +1449,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    /**
 	    * Locks the relative position between two bodies.
 	    *
-	    * @method Tiny.Physics.P2#createLockConstraint
+	    * @method Tiny.Physics.P2.World#createLockConstraint
 	    * @param {Tiny.Sprite|Tiny.Physics.P2.Body|p2.Body} bodyA - First connected body.
 	    * @param {Tiny.Sprite|Tiny.Physics.P2.Body|p2.Body} bodyB - Second connected body.
 	    * @param {Array} [offset] - The offset of bodyB in bodyA's frame. The value is an array with 2 elements matching x and y, i.e: [32, 32].
@@ -1349,17 +1471,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
-	     * Creates a constraint that tries to keep the distance between two bodies constant.
-	     *
-	     * @method Tiny.Physics.P2#createDistanceConstraint
-	     * @param {Tiny.Sprite|Tiny.Physics.P2.Body|p2.Body} bodyA - First connected body.
-	     * @param {Tiny.Sprite|Tiny.Physics.P2.Body|p2.Body} bodyB - Second connected body.
-	     * @param {number} distance - The distance to keep between the bodies.
-	     * @param {Array} [localAnchorA] - The anchor point for bodyA, defined locally in bodyA frame. Defaults to [0,0].
-	     * @param {Array} [localAnchorB] - The anchor point for bodyB, defined locally in bodyB frame. Defaults to [0,0].
-	     * @param {number} [maxForce] - The maximum force that should be applied to constrain the bodies.
-	     * @return {Tiny.Physics.P2.DistanceConstraint} The constraint
-	     */
+	    * Creates a constraint that tries to keep the distance between two bodies constant.
+	    *
+	    * @method Tiny.Physics.P2.World#createDistanceConstraint
+	    * @param {Tiny.Sprite|Tiny.Physics.P2.Body|p2.Body} bodyA - First connected body.
+	    * @param {Tiny.Sprite|Tiny.Physics.P2.Body|p2.Body} bodyB - Second connected body.
+	    * @param {number} distance - The distance to keep between the bodies.
+	    * @param {Array} [localAnchorA] - The anchor point for bodyA, defined locally in bodyA frame. Defaults to [0,0].
+	    * @param {Array} [localAnchorB] - The anchor point for bodyB, defined locally in bodyB frame. Defaults to [0,0].
+	    * @param {number} [maxForce] - The maximum force that should be applied to constrain the bodies.
+	    * @return {Tiny.Physics.P2.DistanceConstraint} The constraint
+	    */
 
 	  }, {
 	    key: 'createDistanceConstraint',
@@ -1376,7 +1498,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    /**
 	    * Creates a constraint that tries to keep the distance between two bodies constant.
 	    *
-	    * @method Tiny.Physics.P2#createGearConstraint
+	    * @method Tiny.Physics.P2.World#createGearConstraint
 	    * @param {Tiny.Sprite|Tiny.Physics.P2.Body|p2.Body} bodyA - First connected body.
 	    * @param {Tiny.Sprite|Tiny.Physics.P2.Body|p2.Body} bodyB - Second connected body.
 	    * @param {number} [angle=0] - The relative angle
@@ -1400,7 +1522,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    * Connects two bodies at given offset points, letting them rotate relative to each other around this point.
 	    * The pivot points are given in world (pixel) coordinates.
 	    *
-	    * @method Tiny.Physics.P2#createRevoluteConstraint
+	    * @method Tiny.Physics.P2.World#createRevoluteConstraint
 	    * @param {Tiny.Sprite|Tiny.Physics.P2.Body|p2.Body} bodyA - First connected body.
 	    * @param {Array} pivotA - The point relative to the center of mass of bodyA which bodyA is constrained to. The value is an array with 2 elements matching x and y, i.e: [32, 32].
 	    * @param {Tiny.Sprite|Tiny.Physics.P2.Body|p2.Body} bodyB - Second connected body.
@@ -1423,19 +1545,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
-	     * Constraint that only allows bodies to move along a line, relative to each other.
-	     * See http://www.iforce2d.net/b2dtut/joints-prismatic
-	     *
-	     * @method Tiny.Physics.P2#createPrismaticConstraint
-	     * @param {Tiny.Sprite|Tiny.Physics.P2.Body|p2.Body} bodyA - First connected body.
-	     * @param {Tiny.Sprite|Tiny.Physics.P2.Body|p2.Body} bodyB - Second connected body.
-	     * @param {boolean} [lockRotation=true] - If set to false, bodyB will be free to rotate around its anchor point.
-	     * @param {Array} [anchorA] - Body A's anchor point, defined in its own local frame. The value is an array with 2 elements matching x and y, i.e: [32, 32].
-	     * @param {Array} [anchorB] - Body A's anchor point, defined in its own local frame. The value is an array with 2 elements matching x and y, i.e: [32, 32].
-	     * @param {Array} [axis] - An axis, defined in body A frame, that body B's anchor point may slide along. The value is an array with 2 elements matching x and y, i.e: [32, 32].
-	     * @param {number} [maxForce] - The maximum force that should be applied to constrain the bodies.
-	     * @return {Tiny.Physics.P2.PrismaticConstraint} The constraint
-	     */
+	    * Constraint that only allows bodies to move along a line, relative to each other.
+	    * See http://www.iforce2d.net/b2dtut/joints-prismatic
+	    *
+	    * @method Tiny.Physics.P2.World#createPrismaticConstraint
+	    * @param {Tiny.Sprite|Tiny.Physics.P2.Body|p2.Body} bodyA - First connected body.
+	    * @param {Tiny.Sprite|Tiny.Physics.P2.Body|p2.Body} bodyB - Second connected body.
+	    * @param {boolean} [lockRotation=true] - If set to false, bodyB will be free to rotate around its anchor point.
+	    * @param {Array} [anchorA] - Body A's anchor point, defined in its own local frame. The value is an array with 2 elements matching x and y, i.e: [32, 32].
+	    * @param {Array} [anchorB] - Body A's anchor point, defined in its own local frame. The value is an array with 2 elements matching x and y, i.e: [32, 32].
+	    * @param {Array} [axis] - An axis, defined in body A frame, that body B's anchor point may slide along. The value is an array with 2 elements matching x and y, i.e: [32, 32].
+	    * @param {number} [maxForce] - The maximum force that should be applied to constrain the bodies.
+	    * @return {Tiny.Physics.P2.PrismaticConstraint} The constraint
+	    * @see {@link http://www.iforce2d.net/b2dtut/joints-prismatic}
+	    */
 
 	  }, {
 	    key: 'createPrismaticConstraint',
@@ -1452,7 +1575,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    /**
 	    * Adds a Constraint to the world.
 	    *
-	    * @method Tiny.Physics.P2#addConstraint
+	    * @method Tiny.Physics.P2.World#addConstraint
 	    * @param {Tiny.Physics.P2.Constraint} constraint - The Constraint to add to the World.
 	    * @return {Tiny.Physics.P2.Constraint} The Constraint that was added.
 	    */
@@ -1468,7 +1591,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    /**
 	    * Removes a Constraint from the world.
 	    *
-	    * @method Tiny.Physics.P2#removeConstraint
+	    * @method Tiny.Physics.P2.World#removeConstraint
 	    * @param {Tiny.Physics.P2.Constraint} constraint - The Constraint to be removed from the World.
 	    * @return {Tiny.Physics.P2.Constraint} The Constraint that was removed.
 	    */
@@ -1484,7 +1607,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    /**
 	     * Adds a Contact Material to the world.
 	     *
-	     * @method Tiny.Physics.P2#addContactMaterial
+	     * @method Tiny.Physics.P2.World#addContactMaterial
 	     * @param {Tiny.Physics.P2.ContactMaterial} material - The Contact Material to be added to the World.
 	     * @return {Tiny.Physics.P2.ContactMaterial} The Contact Material that was added.
 	     */
@@ -1496,10 +1619,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.dispatch(EVENTS.ON_CONTACTMATERIAL_ADDED, material);
 	      return material;
 	    }
+
 	    /**
 	     * Removes a Contact Material from the world.
 	     *
-	     * @method Tiny.Physics.P2#removeContactMaterial
+	     * @method Tiny.Physics.P2.World#removeContactMaterial
 	     * @param {Tiny.Physics.P2.ContactMaterial} material - The Contact Material to be removed from the World.
 	     * @return {Tiny.Physics.P2.ContactMaterial} The Contact Material that was removed.
 	     */
@@ -1515,7 +1639,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    /**
 	    * Gets a Contact Material based on the two given Materials.
 	    *
-	    * @method Tiny.Physics.P2#getContactMaterial
+	    * @method Tiny.Physics.P2.World#getContactMaterial
 	    * @param {Tiny.Physics.P2.Material} materialA - The first Material to search for.
 	    * @param {Tiny.Physics.P2.Material} materialB - The second Material to search for.
 	    * @return {Tiny.Physics.P2.ContactMaterial|boolean} The Contact Material or false if none was found matching the Materials given.
@@ -1530,7 +1654,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    /**
 	    * Sets the given Material against all Shapes owned by all the Bodies in the given array.
 	    *
-	    * @method Tiny.Physics.P2#setMaterial
+	    * @method Tiny.Physics.P2.World#setMaterial
 	    * @param {Tiny.Physics.P2.Material} material - The Material to be applied to the given Bodies.
 	    * @param {array<Tiny.Physics.P2.Body>} bodies - An Array of Body objects that the given Material will be set on.
 	    */
@@ -1545,15 +1669,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
-	       * Creates a Material. Materials are applied to Shapes owned by a Body and can be set with Body.setMaterial().
-	       * Materials are a way to control what happens when Shapes collide. Combine unique Materials together to create Contact Materials.
-	       * Contact Materials have properties such as friction and restitution that allow for fine-grained collision control between different Materials.
-	       *
-	       * @method Tiny.Physics.P2#createMaterial
-	       * @param {string} [name] - Optional name of the Material. Each Material has a unique ID but string names are handy for debugging.
-	       * @param {Tiny.Physics.P2.Body} [body] - Optional Body. If given it will assign the newly created Material to the Body shapes.
-	       * @return {Tiny.Physics.P2.Material} The Material that was created. This is also stored in Tiny.Physics.P2.materials.
-	       */
+	    * Creates a Material. Materials are applied to Shapes owned by a Body and can be set with Body.setMaterial().
+	    * Materials are a way to control what happens when Shapes collide. Combine unique Materials together to create Contact Materials.
+	    * Contact Materials have properties such as friction and restitution that allow for fine-grained collision control between different Materials.
+	    *
+	    * @method Tiny.Physics.P2.World#createMaterial
+	    * @param {string} [name] - Optional name of the Material. Each Material has a unique ID but string names are handy for debugging.
+	    * @param {Tiny.Physics.P2.Body} [body] - Optional Body. If given it will assign the newly created Material to the Body shapes.
+	    * @return {Tiny.Physics.P2.Material} The Material that was created. This is also stored in Tiny.Physics.P2.materials.
+	    */
 
 	  }, {
 	    key: 'createMaterial',
@@ -1570,7 +1694,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    /**
 	     * Creates a Contact Material from the two given Materials. You can then edit the properties of the Contact Material directly.
 	     *
-	     * @method Tiny.Physics.P2#createContactMaterial
+	     * @method Tiny.Physics.P2.World#createContactMaterial
 	     * @param {Tiny.Physics.P2.Material} [materialA] - The first Material to create the ContactMaterial from. If undefined it will create a new Material object first.
 	     * @param {Tiny.Physics.P2.Material} [materialB] - The second Material to create the ContactMaterial from. If undefined it will create a new Material object first.
 	     * @param {object} [options] - Material options object.
@@ -1594,7 +1718,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    * Creates a new Collision Group and optionally applies it to the given object.
 	    * Collision Groups are handled using bitmasks, therefore you have a fixed limit you can create before you need to re-use older groups.
 	    *
-	    * @method Tiny.Physics.P2#createCollisionGroup
+	    * @method Tiny.Physics.P2.World#createCollisionGroup
 	    * @param {Tiny.Group|Tiny.Sprite} [object] - An optional Sprite or Group to apply the Collision Group to. If a Group is given it will be applied to all top-level children.
 	    */
 
@@ -1627,7 +1751,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    * Sets the given CollisionGroup to be the collision group for all shapes in this Body, unless a shape is specified.
 	    * Note that this resets the collisionMask and any previously set groups. See Body.collides() for appending them.
 	    *
-	    * @method Tiny.Physics.P2y#setCollisionGroup
+	    * @method Tiny.Physics.P2.World#setCollisionGroup
 	    * @param {Tiny.Group|Tiny.Sprite} object - A Sprite or Group to apply the Collision Group to. If a Group is given it will be applied to all top-level children.
 	    * @param {Tiny.Physics.CollisionGroup} group - The Collision Group that this Bodies shapes will use.
 	    */
@@ -1635,7 +1759,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'setCollisionGroup',
 	    value: function setCollisionGroup(object, group) {
-	      if (object instanceof _Container2.default) {
+	      if (object instanceof _Group2.default) {
 	        for (var i = 0; i < object.total; i++) {
 	          if (object.children[i]['body'] && object.children[i]['body'].type === BODY_TYPE) {
 	            object.children[i].body.setCollisionGroup(group);
@@ -1647,12 +1771,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
-	     * Handles a p2 impact event.
-	     *
-	     * @method Tiny.Physics.P2#impactHandler
-	     * @private
-	     * @param {object} event - The event data.
-	     */
+	    * Handles a p2 impact event.
+	    *
+	    * @method Tiny.Physics.P2.World#impactHandler
+	    * @private
+	    * @param {object} event - The event data.
+	    */
 
 	  }, {
 	    key: 'impactHandler',
@@ -1680,11 +1804,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	      }
 	    }
+
 	    /**
 	    * Impact event handling is disabled by default. Enable it before any impact events will be dispatched.
 	    * In a busy world hundreds of impact events can be generated every step, so only enable this if you cannot do what you need via beginContact or collision masks.
 	    *
-	    * @method Tiny.Physics.P2#setImpactEvents
+	    * @method Tiny.Physics.P2.World#setImpactEvents
 	    * @param {boolean} state - Set to true to enable impact events, or false to disable.
 	    */
 
@@ -1709,6 +1834,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'friction',
 	    get: function get() {
+	      // 摩擦系数 - 对应于 p2.world.defaultContactMaterial.friction
 	      return this.world.defaultContactMaterial.friction;
 	    },
 	    set: function set(value) {
@@ -1716,14 +1842,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
-	     * 反弹系数 - 对应于 p2.world.defaultContactMaterial.restitution
-	    * @name Tiny.Physics.P2#restitution
+	    * @name Tiny.Physics.P2.World#restitution
 	    * @property {number} restitution - Default coefficient of restitution between colliding bodies. This value is used if no matching ContactMaterial is found for a Material pair.
 	    */
 
 	  }, {
 	    key: 'restitution',
 	    get: function get() {
+	      // 反弹系数 - 对应于 p2.world.defaultContactMaterial.restitution
 	      return this.world.defaultContactMaterial.restitution;
 	    },
 	    set: function set(value) {
@@ -1731,14 +1857,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
-	     * 默认材质 对应于 p2.world.defaultContactMaterial
-	    * @name Tiny.Physics.P2#defaultContactMaterial
+	    * @name Tiny.Physics.P2.World#defaultContactMaterial
 	    * @property {p2.ContactMaterial} defaultContactMaterial - The default Contact Material being used by the World.
+	    * @see p2.world#defaultContactMaterial
 	    */
 
 	  }, {
 	    key: 'defaultContactMaterial',
 	    get: function get() {
+	      // 默认材质 对应于 p2.world.defaultContactMaterial
 	      return this.world.defaultContactMaterial;
 	    },
 	    set: function set(value) {
@@ -1746,14 +1873,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
-	     * 参考p2.world.applySpringForces
-	    * @name Tiny.Physics.P2#applySpringForces
+	    * @name Tiny.Physics.P2.World#applySpringForces
 	    * @property {boolean} applySpringForces - Enable to automatically apply spring forces each step.
+	    * @see p2.world#applySpringForces
 	    */
 
 	  }, {
 	    key: 'applySpringForces',
 	    get: function get() {
+	      // 参考p2.world.applySpringForces
 	      return this.world.applySpringForces;
 	    },
 	    set: function set(value) {
@@ -1761,14 +1889,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
-	    * 旋转运动阻尼
-	    * @name Tiny.Physics.P2#applyDamping
+	    * @name Tiny.Physics.P2.World#applyDamping
 	    * @property {boolean} applyDamping - Enable to automatically apply body damping each step.
+	    * @see p2.world#applyDamping
 	    */
 
 	  }, {
 	    key: 'applyDamping',
 	    get: function get() {
+	      // 旋转运动阻尼
 	      return this.world.applyDamping;
 	    },
 	    set: function set(value) {
@@ -1776,9 +1905,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
-	     * false Turn off global gravity
-	    * @name Tiny.Physics.P2#applyGravity
+	    * @name Tiny.Physics.P2.World#applyGravity
 	    * @property {boolean} applyGravity - Enable to automatically apply gravity each step.
+	    * @see p2.world#applyGravity
 	    */
 
 	  }, {
@@ -1791,9 +1920,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
-	    * 参考p2.world.solveConstraints
-	    * @name Tiny.Physics.P2#solveConstraints
+	    * @name Tiny.Physics.P2.World#solveConstraints
 	    * @property {boolean} solveConstraints - Enable/disable constraint solving in each step.
+	    * @see p2.world#solveConstraints
 	    */
 
 	  }, {
@@ -1806,10 +1935,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
-	    * 参考p2.world.time
-	    * @name Tiny.Physics.P2#time
-	    * @property {boolean} time - The World time.
+	    * @name Tiny.Physics.P2.World#time
+	    * @property {boolean} time - The p2 world time.
 	    * @readonly
+	    * @see p2.world#time
 	    */
 
 	  }, {
@@ -1819,9 +1948,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
-	    * p2.world.emitImpactEvent
-	    * @name Tiny.Physics.P2#emitImpactEvent
+	    * @name Tiny.Physics.P2.World#emitImpactEvent
 	    * @property {boolean} emitImpactEvent - Set to true if you want to the world to emit the "impact" event. Turning this off could improve performance.
+	    * @see p2.world#emitImpactEvent
 	    */
 
 	  }, {
@@ -1837,8 +1966,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    * p2.World.BODY_SLEEPING
 	    * How to deactivate bodies during simulation. Possible modes are: World.NO_SLEEPING, World.BODY_SLEEPING and World.ISLAND_SLEEPING.
 	    * If sleeping is enabled, you might need to wake up the bodies if they fall asleep when they shouldn't. If you want to enable sleeping in the world, but want to disable it for a particular body, see Body.allowSleep.
-	    * @name Tiny.Physics.P2#sleepMode
+	    * @name Tiny.Physics.P2.World#sleepMode
 	    * @property {number} sleepMode
+	    * @see p2.world#sleepMode
 	    */
 
 	  }, {
@@ -1851,7 +1981,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
-	    * @name Tiny.Physics.P2#bodyCount
+	    * @name Tiny.Physics.P2.World#bodyCount
 	    * @property {number} bodyCount - The total number of bodies in the world.
 	    * @readonly
 	    */
@@ -1869,7 +1999,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = World;
 
 /***/ }),
-/* 4 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1880,15 +2010,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _InversePointProxy = __webpack_require__(5);
+	var _InversePointProxy = __webpack_require__(4);
 
 	var _InversePointProxy2 = _interopRequireDefault(_InversePointProxy);
 
-	var _math = __webpack_require__(6);
+	var _math = __webpack_require__(5);
 
 	var P2Math = _interopRequireWildcard(_math);
 
-	var _BodyDebug = __webpack_require__(7);
+	var _BodyDebug = __webpack_require__(6);
 
 	var _BodyDebug2 = _interopRequireDefault(_BodyDebug);
 
@@ -1908,6 +2038,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @property DYNAMIC
 	 * @type {Number}
 	 * @static
+	 * @private
 	 */
 	var DYNAMIC = 1;
 
@@ -1916,22 +2047,29 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @property STATIC
 	 * @type {Number}
 	 * @static
+	 * @private
 	 */
 	var STATIC = 2;
 
 	/**
-	* @class Tiny.Physics.P2.Body
+	* P2 Physics body
+	* @class Body
 	* @constructor
-	* @param {Tiny.Physics.P2.World} world - world reference to the currently running world.
-	* @param {Tiny.Sprite} [sprite] - The Sprite object this physics body belongs to.
-	* @param {number} [x=0] - The x coordinate of this Body.
-	* @param {number} [y=0] - The y coordinate of this Body.
-	* @param {number} [mass=1] - The default mass of this Body (0 = static).
+	* @memberof Tiny.Physics.P2
+	* @extends Tiny.EventEmitter
 	*/
 
 	var Body = function (_Tiny$EventEmitter) {
 	  _inherits(Body, _Tiny$EventEmitter);
 
+	  /**
+	  * @constructor
+	  * @param {Tiny.Physics.P2.World} world - world reference to the currently running world.
+	  * @param {Tiny.Sprite} [sprite] - The Sprite object this physics body belongs to.
+	  * @param {number} [x=0] - The x coordinate of this Body.
+	  * @param {number} [y=0] - The y coordinate of this Body.
+	  * @param {number} [mass=1] - The default mass of this Body (0 = static).
+	   */
 	  function Body(world, sprite, x, y, mass) {
 	    _classCallCheck(this, Body);
 
@@ -1945,32 +2083,38 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
-	       * @property {Tiny.Physics.P2} world - Local reference to the P2 World.
-	       */
+	     * @name Tiny.Physics.P2.Body#world
+	     * @property {Tiny.Physics.P2} world - Local reference to the P2 World.
+	     */
 	    _this.world = world;
 
 	    /**
+	    * @name Tiny.Physics.P2.Body#app
 	    * @property {Tiny.Application} app - Local reference to app.
 	    */
 	    _this.app = _this.world.app;
 
 	    /**
+	    * @name Tiny.Physics.P2.Body#sprite
 	    * @property {Tiny.Sprite} sprite - Reference to the parent Sprite.
 	    */
 	    _this.sprite = sprite;
 
 	    /**
+	    * @name Tiny.Physics.P2.Body#type
 	    * @property {number} type - The type of physics system this body belongs to.
 	    */
 	    _this.type = 'Tiny.Physics.P2.Body';
 
 	    /**
+	    * @name Tiny.Physics.P2.Body#type
 	    * @property {Tiny.Point} offset - The offset of the Physics Body from the Sprite x/y position.
 	    */
 	    _this.offset = new Tiny.Point();
 
 	    /**
-	    * @property {p2.Body} data - The p2 Body data.
+	    * @name Tiny.Physics.P2.Body#data
+	    * @property {p2.Body} data - 原始的p2.Body
 	    * @protected
 	    */
 	    _this.data = new p2.Body({
@@ -1981,15 +2125,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _this.data.parent = _this;
 
 	    /**
-	    * @property {Tiny.Physics.P2.InversePointProxy} velocity - The velocity of the body. Set velocity.x to a negative value to move to the left, position to the right. velocity.y negative values move up, positive move down.
+	    * @name Tiny.Physics.P2.Body#velocity
+	    * @property {Tiny.Physics.P2.InversePointProxy} velocity - 速度。 将velocity.x设置为负值以向左移动，位置向右。 velocity.y为负值向上移动，正向下移动。
 	    */
 	    _this.velocity = new _InversePointProxy2.default(_this.world, _this.data.velocity);
 
 	    /**
-	    * 作用力。刚体在线性速度方向上收到的扭力
+	    * @name Tiny.Physics.P2.Body#force
 	    * @property {Tiny.Physics.P2.InversePointProxy} force - The force applied to the body.
 	    */
-	    _this.force = new _InversePointProxy2.default(_this.world, _this.data.force);
+	    _this.force = new _InversePointProxy2.default(_this.world, _this.data.force); //作用力。刚体在线性速度方向上收到的扭力
 
 	    /**
 	    * @property {array} collidesWith - Array of CollisionGroups that this Bodies shapes collide with.
@@ -3078,14 +3223,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    /**
 	     * 具体参考p2.body.type 以下注释从p2代码注释中拷贝过来
-	     * The type of motion this body has. Should be one of: {{#crossLink "Body/STATIC:property"}}Body.STATIC{{/crossLink}}, {{#crossLink "Body/DYNAMIC:property"}}Body.DYNAMIC{{/crossLink}} and {{#crossLink "Body/KINEMATIC:property"}}Body.KINEMATIC{{/crossLink}}.
-	     *
 	     * * Static bodies do not move, and they do not respond to forces or collision.
 	     * * Dynamic bodies body can move and respond to collisions and forces.
 	     * * Kinematic bodies only moves according to its .velocity, and does not respond to collisions or force.
 	     *
-	     * @property type
-	     * @type {number} value  - default is true
+	     * @property {number} value  - default is true
 	     */
 	    ,
 	    set: function set(value) {
@@ -3288,7 +3430,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Body;
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -3305,12 +3447,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	* p2 和 tiny 系统相反的坐标代理 实现坐标点的直接转换
 	* A InversePointProxy is an internal class that allows for direct getter/setter style property access to Arrays and TypedArrays but inverses the values on set.
 	*
-	* @class Tiny.Physics.P2.InversePointProxy
+	* @class InversePointProxy
 	* @constructor
-	* @param {Tiny.Physics.P2.World} world - A reference to the P2 World.
-	* @param {any} destination - The object to bind to.
+	* @memberof Tiny.Physics.P2
 	*/
 	var InversePointProxy = function () {
+	  /**
+	   * @constructor
+	   * @param {Tiny.Physics.P2.World} world - world reference to the currently running world.
+	   * @param {any} destination - The object to bind to.
+	   */
 	  function InversePointProxy(world, destination) {
 	    _classCallCheck(this, InversePointProxy);
 
@@ -3327,15 +3473,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: "x",
 	    get: function get() {
 	      return this.world.mpxi(this.destination[0]);
-	    }
-	    /**
-	     * @name Tiny.Physics.P2.InversePointProxy#x
-	     * @property {number} x - The x property of this InversePointProxy get and set in pixels.
-	     */
-	    ,
+	    },
 	    set: function set(value) {
 	      this.destination[0] = this.world.pxmi(value);
 	    }
+
 	    /**
 	    * @name Tiny.Physics.P2.InversePointProxy#y
 	    * @property {number} y - The y property of this InversePointProxy get and set in pixels.
@@ -3349,6 +3491,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    set: function set(value) {
 	      this.destination[1] = this.world.pxmi(value);
 	    }
+
+	    /**
+	    * @name Tiny.Physics.P2.InversePointProxy#mx
+	    * @property {number} mx - The x property of this InversePointProxy get and set in meters.
+	    */
+
 	  }, {
 	    key: "mx",
 	    get: function get() {
@@ -3357,6 +3505,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    set: function set(value) {
 	      this.destination[0] = -value;
 	    }
+
 	    /**
 	    * @name Tiny.Physics.P2.InversePointProxy#my
 	    * @property {number} my - The y property of this InversePointProxy get and set in meters.
@@ -3378,7 +3527,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = InversePointProxy;
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -3395,8 +3544,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.clamp = clamp;
 	/**
 	* Keeps an angle value between -180 and +180; or -PI and PI if radians.
-	*
-	* @method Tiny.Physics.Math#wrapAngle
+	* @function
+	* @static
+	* @name wrapAngle
+	* @memberof Tiny.Physics.P2.Math
 	* @param {number} angle - The angle value to wrap
 	* @param {boolean} [radians=false] - Set to `true` if the angle is given in radians, otherwise degrees is expected.
 	* @return {number} The new angle value; will be the same as the input angle if it was within bounds.
@@ -3409,8 +3560,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	* Ensures that the value always stays between min and max, by wrapping the value around.
 	*
 	* If `max` is not larger than `min` the result is 0.
-	*
-	* @method Tiny.Physics.Math#wrap
+	* @function
+	* @static
+	* @name wrap
+	* @memberof Tiny.Physics.P2.Math
 	* @param {number} value - The value to wrap.
 	* @param {number} min - The minimum the value is allowed to be.
 	* @param {number} max - The maximum the value is allowed to be, should be larger than `min`.
@@ -3437,8 +3590,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	* Convert degrees to radians.
-	*
-	* @method Tiny.Physics.P2..Math#degToRad
+	* @function
+	* @static
+	* @name degToRad
+	* @memberof Tiny.Physics.P2.Math
 	* @param {number} degrees - Angle in degrees.
 	* @return {number} Angle in radians.
 	*/
@@ -3448,8 +3603,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	* Convert radians to degrees.
-	*
-	* @method Tiny.Physics.Math#radToDeg
+	* @function
+	* @static
+	* @name radToDeg
+	* @memberof Tiny.Physics.P2.Math
 	* @param {number} radians - Angle in radians.
 	* @return {number} Angle in degrees
 	*/
@@ -3460,7 +3617,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	* Returns the euclidian distance between the two given set of coordinates.
 	*
-	* @method Tiny.Physics.Math#distance
+	* @function
+	* @static
+	* @name distance
+	* @memberof Tiny.Physics.P2.Math
 	* @param {number} x1
 	* @param {number} y1
 	* @param {number} x2
@@ -3474,7 +3634,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	/**
-	 * 两点之间的角度
+	* 两点之间的角度
+	* @function
+	* @static
+	* @name angle
+	* @memberof Tiny.Physics.P2.Math
 	* @param {number} x1
 	* @param {number} y1
 	* @param {number} x2
@@ -3487,8 +3651,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	* Force a value within the boundaries by clamping it to the range `min`, `max`.
-	*
-	* @method Tiny.Physics.Math#clamp
+	* @function
+	* @static
+	* @name clamp
+	* @memberof Tiny.Physics.P2.Math
 	* @param {float} v - The value to be clamped.
 	* @param {float} min - The minimum bounds.
 	* @param {float} max - The maximum bounds.
@@ -3505,7 +3671,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3516,7 +3682,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _utils = __webpack_require__(2);
+	var _utils = __webpack_require__(7);
 
 	var Utils = _interopRequireWildcard(_utils);
 
@@ -3533,15 +3699,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	* 调试的时候画出来p2.body的轮廓
 	* @class Tiny.Physics.P2.BodyDebug
 	* @constructor
+	* @memberof Tiny.Physics.P2
 	* @extends Tiny.Sprite
-	* @param {Tiny.Physices.P2.world} game - Game reference to the currently running game.
-	* @param {Tiny.Physics.P2.Body} body - The P2 Body to display debug data for.
-	* @param {object} settings - Settings object.
 	*/
 
 	var BodyDebug = function (_Tiny$Sprite) {
 	  _inherits(BodyDebug, _Tiny$Sprite);
 
+	  /**
+	   * @constructor
+	   * @param {Tiny.Physics.P2.Body} body
+	   * @param {object} settings
+	   */
 	  function BodyDebug(body, settings) {
 	    _classCallCheck(this, BodyDebug);
 
@@ -3999,6 +4168,84 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(Tiny.Sprite);
 
 	exports.default = BodyDebug;
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	/**
+	* This is a slightly modified version of http://api.jquery.com/jQuery.extend/
+	* @private
+	* @method Tiny.Physics.P2.Utils#extend
+	* @param {boolean} deep - Perform a deep copy?
+	* @param {object} target - The target object to copy to.
+	* @return {object} The extended object.
+	*/
+	function extend(a, b) {
+	  for (var key in b) {
+	    a[key] = b[key];
+	  }
+	  return a;
+	};
+
+	/**
+	* Picks a random pastel color.
+	*
+	* @method Tiny.Physics.P2.Utils#randomPastelHex
+	* @private
+	*/
+	function randomPastelHex() {
+	  var blue = void 0,
+	      green = void 0,
+	      mix = void 0,
+	      red = void 0;
+	  mix = [255, 255, 255];
+
+	  red = Math.floor(Math.random() * 256);
+	  green = Math.floor(Math.random() * 256);
+	  blue = Math.floor(Math.random() * 256);
+
+	  red = Math.floor((red + 3 * mix[0]) / 4);
+	  green = Math.floor((green + 3 * mix[1]) / 4);
+	  blue = Math.floor((blue + 3 * mix[2]) / 4);
+
+	  return rgbToHex(red, green, blue);
+	}
+
+	/**
+	 * Converts from RGB to Hex.
+	 *
+	 * @method Tiny.Physics.P2.Utils#rgbToHex
+	 * @private
+	 */
+	function rgbToHex(r, g, b) {
+	  return componentToHex(r) + componentToHex(g) + componentToHex(b);
+	}
+
+	/**
+	* Component to hex conversion.
+	*
+	* @method Tiny.Physics.P2.Utils#componentToHex
+	* @private
+	*/
+	function componentToHex(c) {
+	  var hex = c.toString(16);
+	  if (hex.length === 2) {
+	    return hex;
+	  } else {
+	    return hex + "0"; // hex + '0';
+	  }
+	}
+
+	exports.extend = extend;
+	exports.randomPastelHex = randomPastelHex;
+	exports.rgbToHex = rgbToHex;
+	exports.componentToHex = componentToHex;
 
 /***/ }),
 /* 8 */
@@ -17323,19 +17570,19 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Container = function (_Tiny$Container) {
-	  _inherits(Container, _Tiny$Container);
+	var Group = function (_Tiny$Container) {
+	  _inherits(Group, _Tiny$Container);
 
-	  function Container() {
-	    _classCallCheck(this, Container);
+	  function Group() {
+	    _classCallCheck(this, Group);
 
-	    return _possibleConstructorReturn(this, (Container.__proto__ || Object.getPrototypeOf(Container)).call(this));
+	    return _possibleConstructorReturn(this, (Group.__proto__ || Object.getPrototypeOf(Group)).call(this));
 	  }
 
-	  return Container;
+	  return Group;
 	}(Tiny.Container);
 
-	exports.default = Container;
+	exports.default = Group;
 
 /***/ }),
 /* 61 */
@@ -17351,22 +17598,28 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	* Collision Group
-	*
-	* @class Tiny.Physics.P2.CollisionGroup
+	* @class CollisionGroup
 	* @constructor
-	* @param {number} bitmask - The CollisionGroup bitmask.
+	* @memberof Tiny.Physics.P2
 	*/
-	var CollisionGroup = function CollisionGroup(bitmask) {
+	var CollisionGroup =
+	/**
+	 * @constructor
+	 * @param {number} mask
+	 */
+	function CollisionGroup(mask) {
 	  _classCallCheck(this, CollisionGroup);
 
 	  /**
-	  * @property {number} mask - The CollisionGroup bitmask.
+	  * @name Tiny.Physics.P2.CollisionGroup#mask
+	  * @property {number} mask - The CollisionGroup mask.
 	  */
-	  this.mask = bitmask;
+	  this.mask = mask;
 	};
 
-	exports.default = CollisionGroup;
 	;
+
+	exports.default = CollisionGroup;
 
 /***/ }),
 /* 62 */
@@ -17384,9 +17637,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	* Creates a linear spring, connecting two bodies. A spring can have a resting length, a stiffness and damping.
 	*
-	* @class Tiny.Physics.P2.Spring
+	* @class Spring
 	* @constructor
-	* @param {Tiny.Physics.P2} world - A reference to the P2 World.
+	* @memberof Tiny.Physics.P2
+	* @see p2.LinearSpring
+	*/
+
+	var Spring =
+	/**
+	* @constructor
+	* @param {Tiny.Physics.P2.World} world - world reference to the currently running world.
 	* @param {p2.Body} bodyA - First connected body.
 	* @param {p2.Body} bodyB - Second connected body.
 	* @param {number} [restLength=1] - Rest length of the spring. A number > 0.
@@ -17397,8 +17657,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	* @param {Array} [localA] - Where to hook the spring to body A in local body coordinates. This value is an array with 2 elements matching x and y, i.e: [32, 32].
 	* @param {Array} [localB] - Where to hook the spring to body B in local body coordinates. This value is an array with 2 elements matching x and y, i.e: [32, 32].
 	*/
-
-	var Spring = function Spring(world, bodyA, bodyB) {
+	function Spring(world, bodyA, bodyB) {
 	  var restLength = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
 	  var stiffness = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 100;
 	  var damping = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : 1;
@@ -17412,12 +17671,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	  restLength = world.pxm(restLength);
 
 	  /**
-	  * @property {Tiny.Application} game - Local reference to game.
+	  * @name Tiny.Physics.P2.Spring#app
+	  * @property {Tiny.Application} app - Local reference to app.
 	  */
 	  this.app = world.app;
 
 	  /**
-	  * @property {Tiny.Physics.P2} world - Local reference to P2 World.
+	  * @name Tiny.Physics.P2.Spring#world
+	  * @property {Tiny.Physics.P2.World} world - Local reference to P2 World.
 	  */
 	  this.world = world;
 
@@ -17444,6 +17705,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  /**
+	  * @name Tiny.Physics.P2.Spring#data
 	  * @property {p2.LinearSpring} data - The actual p2 spring object.
 	  */
 	  this.data = new p2.LinearSpring(bodyA, bodyB, options);
@@ -17469,17 +17731,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	* Creates a rotational spring, connecting two bodies. A spring can have a resting length, a stiffness and damping.
 	*
-	* @class Tiny.Physics.P2.RotationalSpring
+	* @class RotationalSpring
 	* @constructor
-	* @param {Tiny.Physics.P2} world - A reference to the P2 World.
+	* @memberof Tiny.Physics.P2
+	* @see p2.RotationalSpring
+	*/
+
+	var RotationalSpring =
+	/**
+	* @constructor
+	* @param {Tiny.Physics.P2.World} world - A reference to the P2 World.
 	* @param {p2.Body} bodyA - First connected body.
 	* @param {p2.Body} bodyB - Second connected body.
 	* @param {number} [restAngle] - The relative angle of bodies at which the spring is at rest. If not given, it's set to the current relative angle between the bodies.
 	* @param {number} [stiffness=100] - Stiffness of the spring. A number >= 0.
 	* @param {number} [damping=1] - Damping of the spring. A number >= 0.
 	*/
-
-	var RotationalSpring = function RotationalSpring(world, bodyA, bodyB) {
+	function RotationalSpring(world, bodyA, bodyB) {
 	  var restAngle = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
 	  var stiffness = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 100;
 	  var damping = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : 1;
@@ -17538,17 +17806,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	*
 	* @class Tiny.Physics.P2.LockConstraint
 	* @constructor
-	* @param {Tiny.Physics.P2} world - A reference to the P2 World.
-	* @param {p2.Body} bodyA - First connected body.
-	* @param {p2.Body} bodyB - Second connected body.
-	* @param {Array} [offset] - The offset of bodyB in bodyA's frame. The value is an array with 2 elements matching x and y, i.e: [32, 32].
-	* @param {number} [angle=0] - The angle of bodyB in bodyA's frame.
-	* @param {number} [maxForce] - The maximum force that should be applied to constrain the bodies.
+	* @memberof Tiny.Physics.P2
+	* @extends p2.LockConstraint
+	* @see p2.LockConstraint
 	*/
 
 	var LockConstraint = function (_p2$LockConstraint) {
 	  _inherits(LockConstraint, _p2$LockConstraint);
 
+	  /**
+	  * @constructor
+	  * @param {Tiny.Physics.P2.World} world - world reference to the currently running world.
+	  * @param {p2.Body} bodyA - First connected body.
+	  * @param {p2.Body} bodyB - Second connected body.
+	  * @param {Array} [offset] - The offset of bodyB in bodyA's frame. The value is an array with 2 elements matching x and y, i.e: [32, 32].
+	  * @param {number} [angle=0] - The angle of bodyB in bodyA's frame.
+	  * @param {number} [maxForce] - The maximum force that should be applied to constrain the bodies.
+	  */
 	  function LockConstraint(world, bodyA, bodyB) {
 	    var offset = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [0, 0];
 	    var angle = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 0;
@@ -17600,23 +17874,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var p2 = __webpack_require__(8);
+
 	/**
 	* A constraint that tries to keep the distance between two bodies constant.
-	*
-	* @class Tiny.Physics.P2.DistanceConstraint
+	* @class DistanceConstraint
 	* @constructor
-	* @param {Tiny.Physics.P2} world - A reference to the P2 World.
-	* @param {p2.Body} bodyA - First connected body.
-	* @param {p2.Body} bodyB - Second connected body.
-	* @param {number} distance - The distance to keep between the bodies.
-	* @param {Array} [localAnchorA] - The anchor point for bodyA, defined locally in bodyA frame. Defaults to [0,0].
-	* @param {Array} [localAnchorB] - The anchor point for bodyB, defined locally in bodyB frame. Defaults to [0,0].
-	* @param {object} [maxForce=Number.MAX_VALUE] - Maximum force to apply.
+	* @memberof Tiny.Physics.P2
+	* @extends p2.DistanceConstraint
 	*/
 
 	var DistanceConstraint = function (_p2$DistanceConstrain) {
 	  _inherits(DistanceConstraint, _p2$DistanceConstrain);
 
+	  /**
+	  * @constructor
+	  * @param {Tiny.Physics.P2.World} world - world reference to the currently running world.
+	  * @param {p2.Body} bodyA - First connected body.
+	  * @param {p2.Body} bodyB - Second connected body.
+	  * @param {number} distance - The distance to keep between the bodies.
+	  * @param {Array} [localAnchorA] - The anchor point for bodyA, defined locally in bodyA frame. Defaults to [0,0].
+	  * @param {Array} [localAnchorB] - The anchor point for bodyB, defined locally in bodyB frame. Defaults to [0,0].
+	  * @param {object} [maxForce=Number.MAX_VALUE] - Maximum force to apply.
+	   */
 	  function DistanceConstraint(world, bodyA, bodyB) {
 	    var distance = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 100;
 	    var localAnchorA = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : [0, 0];
@@ -17675,18 +17954,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	* Connects two bodies at given offset points, letting them rotate relative to each other around this point.
 	*
-	* @class Tiny.Physics.P2.GearConstraint
+	* @class GearConstraint
 	* @constructor
-	* @param {Tiny.Physics.P2} world - A reference to the P2 World.
-	* @param {p2.Body} bodyA - First connected body.
-	* @param {p2.Body} bodyB - Second connected body.
-	* @param {number} [angle=0] - The relative angle
-	* @param {number} [ratio=1] - The gear ratio.
+	* @extends p2.GearConstraint
+	* @memberof Tiny.Physics.P2
 	*/
 
 	var GearConstraint = function (_p2$GearConstraint) {
 	  _inherits(GearConstraint, _p2$GearConstraint);
 
+	  /**
+	   * @constructor
+	   * @param {Tiny.Physics.P2.World} world - world reference to the currently running world.
+	   * @param {p2.Body} bodyA - First connected body.
+	   * @param {p2.Body} bodyB - Second connected body.
+	   * @param {number} [angle=0] - The relative angle
+	   * @param {number} [ratio=1] - The gear ratio.
+	   */
 	  function GearConstraint(world, bodyA, bodyB) {
 	    var angle = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
 	    var ratio = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 1;
@@ -17699,12 +17983,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 
 	    /**
+	    * @name Tiny.Physics.P2.GearConstraint#app
 	    * @property {Tiny.Application} app - Local reference to game.
 	    */
 	    var _this = _possibleConstructorReturn(this, (GearConstraint.__proto__ || Object.getPrototypeOf(GearConstraint)).call(this, bodyA, bodyB, options));
 
 	    _this.app = world.app;
 	    /**
+	    * @name Tiny.Physics.P2.GearConstraint#world
 	    * @property {Tiny.Physics.P2} world - Local reference to P2 World.
 	    */
 	    _this.world = world;
@@ -17738,20 +18024,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	* Connects two bodies at given offset points, letting them rotate relative to each other around this point.
 	* The pivot points are given in world (pixel) coordinates.
 	*
-	* @class Tiny.Physics.P2.RevoluteConstraint
+	* @class RevoluteConstraint
 	* @constructor
-	* @param {Tiny.Physics.P2} world - A reference to the P2 World.
-	* @param {p2.Body} bodyA - First connected body.
-	* @param {Float32Array} pivotA - The point relative to the center of mass of bodyA which bodyA is constrained to. The value is an array with 2 elements matching x and y, i.e: [32, 32].
-	* @param {p2.Body} bodyB - Second connected body.
-	* @param {Float32Array} pivotB - The point relative to the center of mass of bodyB which bodyB is constrained to. The value is an array with 2 elements matching x and y, i.e: [32, 32].
-	* @param {number} [maxForce=0] - The maximum force that should be applied to constrain the bodies.
-	* @param {Float32Array} [worldPivot=null] - A pivot point given in world coordinates. If specified, localPivotA and localPivotB are automatically computed from this value.
+	* @memberof Tiny.Physics.P2
+	* @extends p2.RevoluteConstraint
+	* @see p2.RevoluteConstraint
 	*/
 
-	var RevoluteConstraint = exports.RevoluteConstraint = function (_p2$RevoluteConstrain) {
+	var RevoluteConstraint = function (_p2$RevoluteConstrain) {
 	  _inherits(RevoluteConstraint, _p2$RevoluteConstrain);
 
+	  /**
+	  * @constructor
+	  * @param {Tiny.Physics.P2.World} world - A reference to the P2 World.
+	  * @param {p2.Body} bodyA - First connected body.
+	  * @param {Float32Array} pivotA - The point relative to the center of mass of bodyA which bodyA is constrained to. The value is an array with 2 elements matching x and y, i.e: [32, 32].
+	  * @param {p2.Body} bodyB - Second connected body.
+	  * @param {Float32Array} pivotB - The point relative to the center of mass of bodyB which bodyB is constrained to. The value is an array with 2 elements matching x and y, i.e: [32, 32].
+	  * @param {number} [maxForce=0] - The maximum force that should be applied to constrain the bodies.
+	  * @param {Float32Array} [worldPivot=null] - A pivot point given in world coordinates. If specified, localPivotA and localPivotB are automatically computed from this value.
+	  */
 	  function RevoluteConstraint(world, bodyA, pivotA, bodyB, pivotB) {
 	    var maxForce = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : Number.MAX_VALUE;
 	    var worldPivot = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : null;
@@ -17784,6 +18076,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return RevoluteConstraint;
 	}(p2.RevoluteConstraint);
 
+	exports.default = RevoluteConstraint;
+
 /***/ }),
 /* 68 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -17804,21 +18098,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	* Connects two bodies at given offset points, letting them rotate relative to each other around this point.
 	*
-	* @class Tiny.Physics.P2.PrismaticConstraint
+	* @class PrismaticConstraint
 	* @constructor
-	* @param {Tiny.Physics.P2} world - A reference to the P2 World.
-	* @param {p2.Body} bodyA - First connected body.
-	* @param {p2.Body} bodyB - Second connected body.
-	* @param {boolean} [lockRotation=true] - If set to false, bodyB will be free to rotate around its anchor point.
-	* @param {Array} [anchorA] - Body A's anchor point, defined in its own local frame. The value is an array with 2 elements matching x and y, i.e: [32, 32].
-	* @param {Array} [anchorB] - Body A's anchor point, defined in its own local frame. The value is an array with 2 elements matching x and y, i.e: [32, 32].
-	* @param {Array} [axis] - An axis, defined in body A frame, that body B's anchor point may slide along. The value is an array with 2 elements matching x and y, i.e: [32, 32].
-	* @param {number} [maxForce] - The maximum force that should be applied to constrain the bodies.
+	* @memberof Tiny.Physics.P2
+	* @extends p2.PrismaticConstraint
+	* @see p2.PrismaticConstraint
 	*/
 
 	var PrismaticConstraint = function (_p2$PrismaticConstrai) {
 	  _inherits(PrismaticConstraint, _p2$PrismaticConstrai);
 
+	  /**
+	  * @constructor
+	  * @param {Tiny.Physics.P2.World} world - world reference to the currently running world.
+	  * @param {p2.Body} bodyA - First connected body.
+	  * @param {p2.Body} bodyB - Second connected body.
+	  * @param {boolean} [lockRotation=true] - If set to false, bodyB will be free to rotate around its anchor point.
+	  * @param {Array} [anchorA] - Body A's anchor point, defined in its own local frame. The value is an array with 2 elements matching x and y, i.e: [32, 32].
+	  * @param {Array} [anchorB] - Body A's anchor point, defined in its own local frame. The value is an array with 2 elements matching x and y, i.e: [32, 32].
+	  * @param {Array} [axis] - An axis, defined in body A frame, that body B's anchor point may slide along. The value is an array with 2 elements matching x and y, i.e: [32, 32].
+	  * @param {number} [maxForce] - The maximum force that should be applied to constrain the bodies.
+	  */
 	  function PrismaticConstraint(world, bodyA, bodyB) {
 	    var lockRotation = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
 	    var anchorA = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : [0, 0];
@@ -17876,21 +18176,27 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var p2 = __webpack_require__(8);
 	/**
-	* A P2 Material.
-	* @class Tiny.Physics.P2.Material
+	* A P2 Material wrapper.
+	* @class Material
 	* @constructor
-	* @param {string} name - The user defined name given to this Material.
+	* @memberof Tiny.Physics.P2
+	* @extends p2.Material
+	* @see p2.Material
 	*/
 
 	var Material = function (_p2$Material) {
 	  _inherits(Material, _p2$Material);
 
+	  /**
+	   * @constructor
+	   * @param {string} name - The user defined name given to this Material.
+	   */
 	  function Material(name) {
 	    _classCallCheck(this, Material);
 
 	    /**
+	    * @name Tiny.Physics.P2.Material#name
 	    * @property {string} name - The user defined name given to this Material.
-	    * @default
 	    */
 	    var _this = _possibleConstructorReturn(this, (Material.__proto__ || Object.getPrototypeOf(Material)).call(this));
 
@@ -17922,24 +18228,29 @@ return /******/ (function(modules) { // webpackBootstrap
 	var p2 = __webpack_require__(8);
 	/**
 	* Defines a physics material
-	*
-	* @class Tiny.Physics.P2.ContactMaterial
+	* @class ContactMaterial
 	* @constructor
-	* @param {Tiny.Physics.P2.Material} materialA - First material participating in the contact material.
-	* @param {Tiny.Physics.P2.Material} materialB - Second material participating in the contact material.
-	* @param {object} [options] - Additional configuration options.
-	* @param {object} [friction=0.3] - Friction to use in the contact of these two materials.
-	* @param {number} [restitution=0.0] - Restitution to use in the contact of these two materials.
-	* @param {number} [stiffness=1e7] - Stiffness of the resulting ContactEquation that this ContactMaterial generates.
-	* @param {number} [relaxation=3] - Relaxation of the resulting ContactEquation that this ContactMaterial generates.
-	* @param {number} [frictionStiffness=1e7] - Stiffness of the resulting FrictionEquation that this ContactMaterial generates.
-	* @param {number} [frictionRelaxation=3] - Relaxation of the resulting FrictionEquation that this ContactMaterial generates.
-	* @param {number} [surfaceVelocity=0] - Will add surface velocity to this material. If bodyA rests on top if bodyB, and the surface velocity is positive, bodyA will slide to the right.
+	* @memberof Tiny.Physics.P2
+	* @extends p2.ContactMaterial
+	* @see p2.ContactMaterial
 	*/
 
 	var ContactMaterial = function (_p2$ContactMaterial) {
 	  _inherits(ContactMaterial, _p2$ContactMaterial);
 
+	  /**
+	  * @constructor
+	  * @param {Tiny.Physics.P2.Material} materialA - First material participating in the contact material.
+	  * @param {Tiny.Physics.P2.Material} materialB - Second material participating in the contact material.
+	  * @param {object} [options] - Additional configuration options.
+	  * @param {object} [friction=0.3] - Friction to use in the contact of these two materials.
+	  * @param {number} [restitution=0.0] - Restitution to use in the contact of these two materials.
+	  * @param {number} [stiffness=1e7] - Stiffness of the resulting ContactEquation that this ContactMaterial generates.
+	  * @param {number} [relaxation=3] - Relaxation of the resulting ContactEquation that this ContactMaterial generates.
+	  * @param {number} [frictionStiffness=1e7] - Stiffness of the resulting FrictionEquation that this ContactMaterial generates.
+	  * @param {number} [frictionRelaxation=3] - Relaxation of the resulting FrictionEquation that this ContactMaterial generates.
+	  * @param {number} [surfaceVelocity=0] - Will add surface velocity to this material. If bodyA rests on top if bodyB, and the surface velocity is positive, bodyA will slide to the right.
+	  */
 	  function ContactMaterial(materialA, materialB, options) {
 	    _classCallCheck(this, ContactMaterial);
 

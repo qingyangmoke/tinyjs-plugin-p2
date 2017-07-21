@@ -1,14 +1,77 @@
+/*
+ * Name: Tiny.Physics.Ant
+ * Description: P2物理引擎
+ * Author: fusheng.sfs
+ */
+
+/**
+* Tiny.js
+* @external Tiny
+* @see {@link http://tinyjs.net/}
+*/
+
+/**
+* p2.js
+* @external p2
+* @see {@link https://github.com/schteppe/p2.js}
+*/
+
+/**
+* phaser.io
+* @external phaser
+* @see {@link https://github.com/photonstorm/phaser}
+*/
+
+/**
+ * @namespace Tiny
+ */
+
+/**
+ * @namespace Physics
+ * @memberof Tiny
+ */
+
+/**
+* @namespace P2
+* @memberof Tiny.Physics
+*/
+
+/**
+ * @class Math
+ * @memberof Tiny.Physics.P2
+ */
+
 import { default as World } from './world';
 
-export * from './utils';
+// export * from './utils';
 
 import * as Math from './core/math';
 
 import * as EVENTS from './EVENTS';
 
-const p2 = require('./p2');
+const p2 = require('../libs/p2');
+
+import Body from './body';
+import Group from './Group';
+import CollisionGroup from './CollisionGroup';
+import InversePointProxy from './InversePointProxy';
+import Spring from './Spring';
+import RotationalSpring from './RotationalSpring';
+import LockConstraint from './LockConstraint';
+import DistanceConstraint from './DistanceConstraint';
+import GearConstraint from './GearConstraint';
+import RevoluteConstraint from './RevoluteConstraint';
+import PrismaticConstraint from './PrismaticConstraint';
+import Material from './Material';
+import ContactMaterial from './ContactMaterial';
 
 let system = null;
+/**
+ * 启用ant物理系统
+ * @method Tiny.Physics.P2#startSystem
+ * @param {Tiny.Application} app
+ * @param {object} config
+ */
 function startSystem(app, config) {
   if (system === null) {
     system = new World(app, config);
@@ -78,6 +141,20 @@ export {
   startSystem,
   Math,
   EVENTS,
+  Body,
+  Group,
+  CollisionGroup,
+  InversePointProxy,
+  Spring,
+  RotationalSpring,
+  LockConstraint,
+  DistanceConstraint,
+  GearConstraint,
+  RevoluteConstraint,
+  PrismaticConstraint,
+  Material,
+  ContactMaterial,
+
   p2,
 
   // AABB,

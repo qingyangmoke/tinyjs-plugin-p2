@@ -1,31 +1,38 @@
-const p2 = require('./p2');
+const p2 = require('../libs/p2');
 /**
 * Creates a linear spring, connecting two bodies. A spring can have a resting length, a stiffness and damping.
 *
-* @class Tiny.Physics.P2.Spring
+* @class Spring
 * @constructor
-* @param {Tiny.Physics.P2} world - A reference to the P2 World.
-* @param {p2.Body} bodyA - First connected body.
-* @param {p2.Body} bodyB - Second connected body.
-* @param {number} [restLength=1] - Rest length of the spring. A number > 0.
-* @param {number} [stiffness=100] - Stiffness of the spring. A number >= 0.
-* @param {number} [damping=1] - Damping of the spring. A number >= 0.
-* @param {Array} [worldA] - Where to hook the spring to body A in world coordinates. This value is an array with 2 elements matching x and y, i.e: [32, 32].
-* @param {Array} [worldB] - Where to hook the spring to body B in world coordinates. This value is an array with 2 elements matching x and y, i.e: [32, 32].
-* @param {Array} [localA] - Where to hook the spring to body A in local body coordinates. This value is an array with 2 elements matching x and y, i.e: [32, 32].
-* @param {Array} [localB] - Where to hook the spring to body B in local body coordinates. This value is an array with 2 elements matching x and y, i.e: [32, 32].
+* @memberof Tiny.Physics.P2
+* @see p2.LinearSpring
 */
-export default class Spring {
+class Spring {
+  /**
+  * @constructor
+  * @param {Tiny.Physics.P2.World} world - world reference to the currently running world.
+  * @param {p2.Body} bodyA - First connected body.
+  * @param {p2.Body} bodyB - Second connected body.
+  * @param {number} [restLength=1] - Rest length of the spring. A number > 0.
+  * @param {number} [stiffness=100] - Stiffness of the spring. A number >= 0.
+  * @param {number} [damping=1] - Damping of the spring. A number >= 0.
+  * @param {Array} [worldA] - Where to hook the spring to body A in world coordinates. This value is an array with 2 elements matching x and y, i.e: [32, 32].
+  * @param {Array} [worldB] - Where to hook the spring to body B in world coordinates. This value is an array with 2 elements matching x and y, i.e: [32, 32].
+  * @param {Array} [localA] - Where to hook the spring to body A in local body coordinates. This value is an array with 2 elements matching x and y, i.e: [32, 32].
+  * @param {Array} [localB] - Where to hook the spring to body B in local body coordinates. This value is an array with 2 elements matching x and y, i.e: [32, 32].
+  */
   constructor(world, bodyA, bodyB, restLength = 1, stiffness = 100, damping = 1, worldA, worldB, localA, localB) {
     restLength = world.pxm(restLength);
 
     /**
-    * @property {Tiny.Application} game - Local reference to game.
+    * @name Tiny.Physics.P2.Spring#app
+    * @property {Tiny.Application} app - Local reference to app.
     */
     this.app = world.app;
 
     /**
-    * @property {Tiny.Physics.P2} world - Local reference to P2 World.
+    * @name Tiny.Physics.P2.Spring#world
+    * @property {Tiny.Physics.P2.World} world - Local reference to P2 World.
     */
     this.world = world;
 
@@ -52,6 +59,7 @@ export default class Spring {
     }
 
     /**
+    * @name Tiny.Physics.P2.Spring#data
     * @property {p2.LinearSpring} data - The actual p2 spring object.
     */
     this.data = new p2.LinearSpring(bodyA, bodyB, options);
@@ -59,3 +67,5 @@ export default class Spring {
     this.data.parent = this;
   }
 }
+
+export default Spring;

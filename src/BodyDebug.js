@@ -1,15 +1,18 @@
 import * as Utils from './utils';
-const p2 = require('./p2');
+const p2 = require('../libs/p2');
 /**
 * 调试的时候画出来p2.body的轮廓
 * @class Tiny.Physics.P2.BodyDebug
 * @constructor
+* @memberof Tiny.Physics.P2
 * @extends Tiny.Sprite
-* @param {Tiny.Physices.P2.world} game - Game reference to the currently running game.
-* @param {Tiny.Physics.P2.Body} body - The P2 Body to display debug data for.
-* @param {object} settings - Settings object.
 */
-export default class BodyDebug extends Tiny.Sprite {
+class BodyDebug extends Tiny.Sprite {
+  /**
+   * @constructor
+   * @param {Tiny.Physics.P2.Body} body
+   * @param {object} settings
+   */
   constructor(body, settings) {
     super();
 
@@ -364,3 +367,5 @@ export default class BodyDebug extends Tiny.Sprite {
     }
   }
 }
+
+export default BodyDebug;

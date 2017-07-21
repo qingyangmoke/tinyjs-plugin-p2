@@ -1,15 +1,21 @@
 /**
 * Collision Group
-*
-* @class Tiny.Physics.P2.CollisionGroup
+* @class CollisionGroup
 * @constructor
-* @param {number} bitmask - The CollisionGroup bitmask.
+* @memberof Tiny.Physics.P2
 */
-export default class CollisionGroup {
-  constructor(bitmask) {
+class CollisionGroup {
+  /**
+   * @constructor
+   * @param {number} mask
+   */
+  constructor(mask) {
     /**
-    * @property {number} mask - The CollisionGroup bitmask.
+    * @name Tiny.Physics.P2.CollisionGroup#mask
+    * @property {number} mask - The CollisionGroup mask.
     */
-    this.mask = bitmask;
+    this.mask = mask;
   }
 };
+
+export default CollisionGroup;
