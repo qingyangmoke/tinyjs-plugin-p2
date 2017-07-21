@@ -1,7 +1,7 @@
 {
   "name": "tinyjs-plugin-p2",
-  "version": "0.0.3",
-  "author": "采东 <qingyangmoke@qq.com>",
+  "version": "0.0.4",
+  "author": "清扬陌客 <qingyangmoke@qq.com>",
   "description": "tinyjs P2物理引擎基础库",
   "keywords": [
     "tinyjs",
