@@ -1,8 +1,8 @@
 /*!
  * Tiny.Physics.P2
  * Description: P2物理引擎，从Phaser的p2的改造过来的 感谢Phaser提供的解决方案
- * Author: 采东 <qingyangmoke@qq.com>
- * Version: v0.0.3
+ * Author: 清扬陌客 <qingyangmoke@qq.com>
+ * Version: v0.0.4
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -189,7 +189,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var system = null;
 	/**
-	 * 启用ant物理系统
+	 * 启用P2物理系统
 	 * @method Tiny.Physics.P2#startSystem
 	 * @param {Tiny.Application} app
 	 * @param {object} config
