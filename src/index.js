@@ -67,7 +67,7 @@ import ContactMaterial from './ContactMaterial';
 
 let system = null;
 /**
- * 启用ant物理系统
+ * 启用P2物理系统
  * @method Tiny.Physics.P2#startSystem
  * @param {Tiny.Application} app
  * @param {object} config
