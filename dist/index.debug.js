@@ -145,9 +145,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	// export * from './utils';
 
 	var p2 = __webpack_require__(8); /*
-	                                 * Name: Tiny.Physics.Ant
+	                                 * Name: Tiny.Physics.P2
 	                                 * Description: P2物理引擎
-	                                 * Author: fusheng.sfs
+	                                 * Author: 清扬陌客 <qingyangmoke@qq.com>
 	                                 */
 
 	/**

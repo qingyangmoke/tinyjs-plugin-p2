@@ -1,7 +1,7 @@
 /*
- * Name: Tiny.Physics.Ant
+ * Name: Tiny.Physics.P2
  * Description: P2物理引擎
- * Author: fusheng.sfs
+ * Author: 清扬陌客 <qingyangmoke@qq.com>
  */
 
 /**
