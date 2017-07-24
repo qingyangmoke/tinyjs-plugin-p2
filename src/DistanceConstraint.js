@@ -1,18 +1,23 @@
-const p2 = require('./p2');
+const p2 = require('../libs/p2');
+
 /**
 * A constraint that tries to keep the distance between two bodies constant.
-*
-* @class Tiny.Physics.P2.DistanceConstraint
+* @class DistanceConstraint
 * @constructor
-* @param {Tiny.Physics.P2} world - A reference to the P2 World.
-* @param {p2.Body} bodyA - First connected body.
-* @param {p2.Body} bodyB - Second connected body.
-* @param {number} distance - The distance to keep between the bodies.
-* @param {Array} [localAnchorA] - The anchor point for bodyA, defined locally in bodyA frame. Defaults to [0,0].
-* @param {Array} [localAnchorB] - The anchor point for bodyB, defined locally in bodyB frame. Defaults to [0,0].
-* @param {object} [maxForce=Number.MAX_VALUE] - Maximum force to apply.
+* @memberof Tiny.Physics.P2
+* @extends p2.DistanceConstraint
 */
-export default class DistanceConstraint extends p2.DistanceConstraint {
+class DistanceConstraint extends p2.DistanceConstraint {
+  /**
+  * @constructor
+  * @param {Tiny.Physics.P2.World} world - world reference to the currently running world.
+  * @param {p2.Body} bodyA - First connected body.
+  * @param {p2.Body} bodyB - Second connected body.
+  * @param {number} distance - The distance to keep between the bodies.
+  * @param {Array} [localAnchorA] - The anchor point for bodyA, defined locally in bodyA frame. Defaults to [0,0].
+  * @param {Array} [localAnchorB] - The anchor point for bodyB, defined locally in bodyB frame. Defaults to [0,0].
+  * @param {object} [maxForce=Number.MAX_VALUE] - Maximum force to apply.
+   */
   constructor(world, bodyA, bodyB, distance = 100, localAnchorA = [0, 0], localAnchorB = [0, 0], maxForce = Number.MAX_VALUE) {
     distance = world.pxm(distance);
 
@@ -38,3 +43,5 @@ export default class DistanceConstraint extends p2.DistanceConstraint {
     this.world = world;
   }
 }
+
+export default DistanceConstraint;

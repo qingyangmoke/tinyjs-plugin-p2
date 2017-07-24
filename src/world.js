@@ -1,5 +1,5 @@
 import { default as Body } from './body';
-import { default as Container } from './Container';
+import { default as Group } from './Group';
 import { default as CollisionGroup } from './CollisionGroup';
 import { default as InversePointProxy } from './InversePointProxy';
 import { default as Spring } from './Spring';
@@ -15,8 +15,20 @@ import { default as ContactMaterial } from './ContactMaterial';
 import * as EVENTS from './EVENTS';
 
 const BODY_TYPE = 'Tiny.Physics.P2.Body';
-const p2 = require('./p2');
-export default class World extends Tiny.EventEmitter {
+const p2 = require('../libs/p2');
+/**
+ * P2 physics world
+ *
+ * @constructor
+ * @memberof Tiny.Physics.P2
+ * @extends Tiny.EventEmitter
+ */
+class World extends Tiny.EventEmitter {
+  /**
+  * @constructor
+  * @param {Tiny.Application} app - app reference to the currently running tiny application.
+  * @param {object} config
+  */
   constructor(app, config) {
     super();
     this.type = 'Tiny.Physics.P2.World';
@@ -165,6 +177,16 @@ export default class World extends Tiny.EventEmitter {
     this.setBoundsToWorld(true, true, true, true, false);
   }
 
+  /**
+  * This will create a P2 Physics body on the given object or array of objects.
+  * A object can only have 1 physics body active at any one time, and it can't be changed until the object is destroyed.
+  * Note: When the object is enabled for P2 physics it has its anchor x/y set to 0.5 so it becomes centered.
+  *
+  * @method Tiny.Physics.P2.World#enable
+  * @param {object|array|Tiny.Physics.P2.Group} object - The object to create the physics body on. Can also be an array or Group of objects, a body will be created on every child that has a `body` property.
+  * @param {boolean} [debug=false] - Create a debug object to go with this body?
+  * @param {boolean} [children=true] - Should a body be created on all children of this object? If true it will recurse down the display list as far as it can go.
+  */
   enable(object, debug, children) {
     if (debug === undefined) { debug = false; }
     if (children === undefined) { children = true; }
@@ -175,7 +197,7 @@ export default class World extends Tiny.EventEmitter {
       i = object.length;
 
       while (i--) {
-        if (object[i] instanceof Container) {
+        if (object[i] instanceof Group) {
           this.enable(object[i].children, debug, children);
         } else {
           this.enableBody(object[i], debug);
@@ -190,7 +212,7 @@ export default class World extends Tiny.EventEmitter {
         // }
       }
     } else {
-      if (object instanceof Container) {
+      if (object instanceof Group) {
         this.enable(object.children, debug, children);
       } else {
         this.enableBody(object, debug);
@@ -206,8 +228,16 @@ export default class World extends Tiny.EventEmitter {
     }
   }
 
+  /**
+  * Creates a P2 Physics body on the given object.
+  * A object can only have 1 physics body active at any one time, and it can't be changed until the body is nulled.
+  *
+  * @method Tiny.Physics.P2.World#enableBody
+  * @param {object} object - The object to create the physics body on. A body will only be created if this object has a null `body` property.
+  * @param {boolean} debug - Create a debug object to go with this body?
+  */
   enableBody(object, debug) {
-    console.log('enableBody', object.body);
+    // console.log('enableBody', object.body);
     if (object.body === void 0) {
       object.body = new Body(this, object, object.x, object.y, 1);
       object.body.debug = debug;
@@ -220,12 +250,12 @@ export default class World extends Tiny.EventEmitter {
   }
 
   /**
-   * Add a body to the world.
-   *
-   * @method Tiny.Physics.P2#addBody
-   * @param {Tiny.Physics.P2.Body} body - The Body to add to the World.
-   * @return {boolean} True if the Body was added successfully, otherwise false.
-   */
+  * Add a body to the world.
+  *
+  * @method Tiny.Physics.P2.World#addBody
+  * @param {Tiny.Physics.P2.Body} body - The Body to add to the World.
+  * @return {boolean} True if the Body was added successfully, otherwise false.
+  */
   addBody(body) {
     if (this._toRemove) {
       for (let i = 0; i < this._toRemove.length; i++) {
@@ -247,6 +277,9 @@ export default class World extends Tiny.EventEmitter {
     }
   }
 
+  /**
+  * @private
+  */
   preUpdate() {
     let i = this._toRemove.length;
     while (i--) {
@@ -255,6 +288,9 @@ export default class World extends Tiny.EventEmitter {
     this._toRemove.length = 0;
   }
 
+  /**
+  * @private
+  */
   update() {
     if (this.paused) {
       return;
@@ -270,7 +306,8 @@ export default class World extends Tiny.EventEmitter {
   }
 
   /**
-   * 检查是否安装
+   * check if p2 physics system is setup
+   * @method Tiny.Physics.P2.World#checkIfSetup
    */
   checkIfSetup() {
     if (this.app === null) {
@@ -278,6 +315,21 @@ export default class World extends Tiny.EventEmitter {
     }
   }
 
+  /**
+  * Clears all bodies from the simulation, resets callbacks and resets the collision bitmask.
+  *
+  * The P2 world is also cleared:
+  *
+  * * Removes all solver equations
+  * * Removes all constraints
+  * * Removes all bodies
+  * * Removes all springs
+  * * Removes all contact materials
+  *
+  * This is called automatically when you switch state.
+  *
+  * @method Tiny.Physics.P2.World#clear
+  */
   clear() {
     this.world.time = 0;
     this.world.fixedStepTime = 0;
@@ -330,6 +382,11 @@ export default class World extends Tiny.EventEmitter {
     this.walls = { left: null, right: null, top: null, bottom: null };
   }
 
+  /**
+   * Starts the begin and end Contact listeners again.
+   *
+   * @method Tiny.Physics.P2.World#reset
+   */
   reset() {
     this.world.on(EVENTS.ON_BEGIN_CONTACT, this.beginContactHandler, this);
     this.world.on(EVENTS.ON_END_CONTACT, this.endContactHandler, this);
@@ -343,6 +400,11 @@ export default class World extends Tiny.EventEmitter {
     this.setBoundsToWorld(true, true, true, true, false);
   }
 
+  /**
+  * Clears all bodies from the simulation and unlinks World from Game. Should only be called on game shutdown. Call `clear` on a State change.
+  *
+  * @method Tiny.Physics.P2.World#destroy
+  */
   destroy() {
     this.clear();
     if (this.app.physics === this) {
@@ -352,63 +414,83 @@ export default class World extends Tiny.EventEmitter {
   }
 
   /**
-   * 触发指定事件事件
-   * @param {String} eventName
-   * @param {any} eventData
-   */
+  * fire event
+  * @private
+  * @method Tiny.Physics.P2.World#dispatch
+  * @param {String} eventName
+  * @param {any} eventData
+  */
   dispatch(eventName, ...args) {
     // this.emit(eventName, ...args);
     this.emit.apply(this, arguments);
   }
 
   /**
-   * pixi 转 p2
-   * @param {Number} v - Tiny系统数值单位
-   * @return {Number} - p2系统数值单位
-   */
+  * Convert pixel value to p2 physics scale (meters).
+  * By default uses a scale of 20px per meter.
+  * If you need to modify this you can over-ride these functions via the Physics Configuration object.
+  *
+  * @method Tiny.Physics.P2.World#pxm
+  * @param {number} v - The value to convert.
+  * @return {number} The scaled value.
+  */
   pxm(v) {
     return v * 0.05;
   }
 
   /**
-   * pixi 转 p2 在取反
-   * @param {Number} v - Tiny系统数值单位
-   * @return {Number} - p2系统数值单位
-   */
+  * Convert tiny value to p2 physics scale (meters) and inverses it.
+  * By default uses a scale of 20px per meter.
+  * If you need to modify this you can over-ride these functions via the Physics Configuration object.
+  *
+  * @method Tiny.Physics.P2.World#pxmi
+  * @param {number} v - The value to convert.
+  * @return {number} The scaled value.
+  */
   pxmi(v) {
     return -this.pxm(v);
   }
 
   /**
-   * p2 转 pixi
-   * @param {Number} v  - 要转换的p2系统单位
-   * @return {Number} - Tiny系统单位
-   */
+  * Convert p2 physics value (meters) to pixel scale.
+  * By default uses a scale of 20px per meter.
+  * If you need to modify this you can over-ride these functions via the Physics Configuration object.
+  *
+  * @method Tiny.Physics.P2.World#mpx
+  * @param {number} v - The value to convert.
+  * @return {number} The scaled value.
+  */
   mpx(v) {
     return v * 20;
   }
 
   /**
-   * p2 转 pixi 在取反
-   * @param {Number} v - 要转换的p2系统单位
-   * @return {Number} - Tiny系统单位
-   */
+  * Convert p2 physics value (meters) to pixel scale and inverses it.
+  * By default uses a scale of 20px per meter.
+  * If you need to modify this you can over-ride these functions via the Physics Configuration object.
+  *
+  * @method Tiny.Physics.P2.World#mpxi
+  * @param {number} v - The value to convert.
+  * @return {number} The scaled value.
+  */
   mpxi(v) {
     return -this.mpx(v);
   }
 
   /**
-   * 放到延迟删除临时队列
-   * @param {Tiny.Physics.P2.Body} body - 要延迟到下一次渲染删除的Body对象
-   */
-  removeBodyNextStep(body) {
+  * This will add a P2 Physics body into the removal list for the next step.
+  *
+  * @method Tiny.Physics.P2.World#removeBodyNextStep
+  * @param {Tiny.Physics.P2.Body} body - The body to remove at the start of the next step.
+  */
+  removeBodyNextStep(body) { // 放到延迟删除临时队列 body - 要延迟到下一次渲染删除的Body对象
     this._toRemove.push(body);
   }
 
   /**
     * Removes a body from the world. This will silently fail if the body wasn't part of the world to begin with.
     *
-    * @method Tiny.Physics.P2#removeBody
+    * @method Tiny.Physics.P2.World#removeBody
     * @param {Tiny.Physics.P2.Body} body - The Body to remove from the World.
     * @return {Tiny.Physics.P2.Body} The Body that was removed.
     */
@@ -426,27 +508,27 @@ export default class World extends Tiny.EventEmitter {
   }
 
   /**
-   * 恢复已暂停的p2.world
+   * Pauses the P2 World independent of the game pause state.
    *
-   * @method Tiny.Physics.P2#resume
+   * @method Tiny.Physics.P2.World#resume
    */
   pause() {
     this._paused = true;
   }
 
   /**
-  * 恢复已暂停的p2.world
+  * Resumes a paused P2 World.
   *
-  * @method Tiny.Physics.P2#resume
+  * @method Tiny.Physics.P2.World#resume
   */
   resume() {
     this._paused = false;
   }
 
   /**
-   * 处理p2的 beginContact事件.
+   * Handles a p2 begin contact event.
    *
-   * @method Tiny.Physics.P2#beginContactHandler
+   * @method Tiny.Physics.P2.World#beginContactHandler
    * @param {object} event - The p2 event data.
    */
   beginContactHandler(event) {
@@ -482,7 +564,7 @@ export default class World extends Tiny.EventEmitter {
   /**
    * Handles a p2 end contact event.
    *
-   * @method Tiny.Physics.P2#endContactHandler
+   * @method Tiny.Physics.P2.World#endContactHandler
    * @param {object} event - The event data.
    */
   endContactHandler(event) {
@@ -516,7 +598,7 @@ export default class World extends Tiny.EventEmitter {
   /**
   * Creates a new Body and adds it to the World.
   *
-  * @method Tiny.Physics.P2#createBody
+  * @method Tiny.Physics.P2.World#createBody
   * @param {number} x - The x coordinate of Body.
   * @param {number} y - The y coordinate of Body.
   * @param {number} mass - The mass of the Body. A mass of 0 means a 'static' Body is created.
@@ -549,7 +631,7 @@ export default class World extends Tiny.EventEmitter {
   * Sets the bounds of the Physics world to match the Game.World dimensions.
   * You can optionally set which 'walls' to create: left, right, top or bottom.
   *
-  * @method Tiny.Physics#setBoundsToWorld
+  * @method Tiny.Physics.P2.World#setBoundsToWorld
   * @param {boolean} [left=true] - If true will create the left bounds wall.
   * @param {boolean} [right=true] - If true will create the right bounds wall.
   * @param {boolean} [top=true] - If true will create the top bounds wall.
@@ -568,7 +650,7 @@ export default class World extends Tiny.EventEmitter {
   * the newly created bounds will also not have the left and right walls.
   * Explicitly state them in the parameters to override this.
   *
-  * @method Tiny.Physics.P2#setBounds
+  * @method Tiny.Physics.P2.World#setBounds
   * @param {number} x - The x coordinate of the top-left corner of the bounds.
   * @param {number} y - The y coordinate of the top-left corner of the bounds.
   * @param {number} width - The width of the bounds.
@@ -603,7 +685,7 @@ export default class World extends Tiny.EventEmitter {
    * Internal method called by setBounds. Responsible for creating, updating or
    * removing the wall body shapes.
    *
-   * @method Tiny.Physics.P2#setupWall
+   * @method Tiny.Physics.P2.World#setupWall
    * @private
    * @param {boolean} create - True to create the wall shape, false to remove it.
    * @param {string} wall - The wall segment to update.
@@ -643,7 +725,7 @@ export default class World extends Tiny.EventEmitter {
   /**
   * Sets the given material against the 4 bounds of this World.
   *
-  * @method Tiny.Physics#setWorldMaterial
+  * @method Tiny.Physics.P2.World#setWorldMaterial
   * @param {Tiny.Physics.P2.Material} material - The material to set.
   * @param {boolean} [left=true] - If true will set the material on the left bounds wall.
   * @param {boolean} [right=true] - If true will set the material on the right bounds wall.
@@ -673,7 +755,7 @@ export default class World extends Tiny.EventEmitter {
    * If you start to use your own collision groups then your objects will no longer collide with the bounds.
    * To fix this you need to adjust the bounds to use its own collision group first BEFORE changing your Sprites collision group.
    *
-   * @method Tiny.Physics.P2#updateBoundsCollisionGroup
+   * @method Tiny.Physics.P2.World#updateBoundsCollisionGroup
    * @param {boolean} [setCollisionGroup=true] - If true the Bounds will be set to use its own Collision Group.
    */
   updateBoundsCollisionGroup(setCollisionGroup = true) {
@@ -699,125 +781,121 @@ export default class World extends Tiny.EventEmitter {
   }
 
   /**
-  * 参考 p2.world toJSON.
+  * A JSON representation of the world.
   *
-  * @method Tiny.Physics.P2#toJSON
+  * @method Tiny.Physics.P2.World#toJSON
   * @return {object} A JSON representation of the world.
+  * @see p2.world#toJSON.
   */
   toJSON() {
     return this.world.toJSON();
   }
 
   /**
-  * 摩擦系数 - 对应于 p2.world.defaultContactMaterial.friction
-  * @name Tiny.Physics.P2#friction
+  * @name Tiny.Physics.P2.World#friction
   * @property {number} friction - Friction between colliding bodies. This value is used if no matching ContactMaterial is found for a Material pair.
   */
   get friction() {
+    // 摩擦系数 - 对应于 p2.world.defaultContactMaterial.friction
     return this.world.defaultContactMaterial.friction;
   }
-
   set friction(value) {
     this.world.defaultContactMaterial.friction = value;
   }
 
   /**
-   * 反弹系数 - 对应于 p2.world.defaultContactMaterial.restitution
-  * @name Tiny.Physics.P2#restitution
+  * @name Tiny.Physics.P2.World#restitution
   * @property {number} restitution - Default coefficient of restitution between colliding bodies. This value is used if no matching ContactMaterial is found for a Material pair.
   */
   get restitution() {
+    // 反弹系数 - 对应于 p2.world.defaultContactMaterial.restitution
     return this.world.defaultContactMaterial.restitution;
   }
-
   set restitution(value) {
     this.world.defaultContactMaterial.restitution = value;
   }
 
   /**
-   * 默认材质 对应于 p2.world.defaultContactMaterial
-  * @name Tiny.Physics.P2#defaultContactMaterial
+  * @name Tiny.Physics.P2.World#defaultContactMaterial
   * @property {p2.ContactMaterial} defaultContactMaterial - The default Contact Material being used by the World.
+  * @see p2.world#defaultContactMaterial
   */
   get defaultContactMaterial() {
+    // 默认材质 对应于 p2.world.defaultContactMaterial
     return this.world.defaultContactMaterial;
   }
-
   set defaultContactMaterial(value) {
     this.world.defaultContactMaterial = value;
   }
 
   /**
-   * 参考p2.world.applySpringForces
-  * @name Tiny.Physics.P2#applySpringForces
+  * @name Tiny.Physics.P2.World#applySpringForces
   * @property {boolean} applySpringForces - Enable to automatically apply spring forces each step.
+  * @see p2.world#applySpringForces
   */
   get applySpringForces() {
+    // 参考p2.world.applySpringForces
     return this.world.applySpringForces;
   }
-
   set applySpringForces(value) {
     this.world.applySpringForces = value;
   }
 
   /**
-  * 旋转运动阻尼
-  * @name Tiny.Physics.P2#applyDamping
+  * @name Tiny.Physics.P2.World#applyDamping
   * @property {boolean} applyDamping - Enable to automatically apply body damping each step.
+  * @see p2.world#applyDamping
   */
   get applyDamping() {
+    // 旋转运动阻尼
     return this.world.applyDamping;
   }
-
   set applyDamping(value) {
     this.world.applyDamping = value;
   }
 
   /**
-   * false Turn off global gravity
-  * @name Tiny.Physics.P2#applyGravity
+  * @name Tiny.Physics.P2.World#applyGravity
   * @property {boolean} applyGravity - Enable to automatically apply gravity each step.
+  * @see p2.world#applyGravity
   */
   get applyGravity() {
     return this.world.applyGravity;
   }
-
   set applyGravity(value) {
     this.world.applyGravity = value;
   }
 
   /**
-  * 参考p2.world.solveConstraints
-  * @name Tiny.Physics.P2#solveConstraints
+  * @name Tiny.Physics.P2.World#solveConstraints
   * @property {boolean} solveConstraints - Enable/disable constraint solving in each step.
+  * @see p2.world#solveConstraints
   */
   get solveConstraints() {
     return this.world.solveConstraints;
   }
-
   set solveConstraints(value) {
     this.world.solveConstraints = value;
   }
 
   /**
-  * 参考p2.world.time
-  * @name Tiny.Physics.P2#time
-  * @property {boolean} time - The World time.
+  * @name Tiny.Physics.P2.World#time
+  * @property {boolean} time - The p2 world time.
   * @readonly
+  * @see p2.world#time
   */
   get time() {
     return this.world.time;
   }
 
   /**
-  * p2.world.emitImpactEvent
-  * @name Tiny.Physics.P2#emitImpactEvent
+  * @name Tiny.Physics.P2.World#emitImpactEvent
   * @property {boolean} emitImpactEvent - Set to true if you want to the world to emit the "impact" event. Turning this off could improve performance.
+  * @see p2.world#emitImpactEvent
   */
   get emitImpactEvent() {
     return this.world.emitImpactEvent;
   }
-
   set emitImpactEvent(value) {
     this.world.emitImpactEvent = value;
   }
@@ -826,19 +904,19 @@ export default class World extends Tiny.EventEmitter {
   * p2.World.BODY_SLEEPING
   * How to deactivate bodies during simulation. Possible modes are: World.NO_SLEEPING, World.BODY_SLEEPING and World.ISLAND_SLEEPING.
   * If sleeping is enabled, you might need to wake up the bodies if they fall asleep when they shouldn't. If you want to enable sleeping in the world, but want to disable it for a particular body, see Body.allowSleep.
-  * @name Tiny.Physics.P2#sleepMode
+  * @name Tiny.Physics.P2.World#sleepMode
   * @property {number} sleepMode
+  * @see p2.world#sleepMode
   */
   get sleepMode() {
     return this.world.sleepMode;
   }
-
   set sleepMode(value) {
     this.world.sleepMode = value;
   }
 
   /**
-  * @name Tiny.Physics.P2#bodyCount
+  * @name Tiny.Physics.P2.World#bodyCount
   * @property {number} bodyCount - The total number of bodies in the world.
   * @readonly
   */
@@ -847,16 +925,16 @@ export default class World extends Tiny.EventEmitter {
   }
 
   /**
-   * Test if a world point overlaps bodies. You will get an array of actual P2 bodies back. You can find out which Sprite a Body belongs to
-   * (if any) by checking the Body.parent.sprite property. Body.parent is a Tiny.Physics.P2.Body property.
-   *
-   * @method Tiny.Physics.P2#hitTest
-   * @param {Tiny.Point} worldPoint - Point to use for intersection tests. The points values must be in world (pixel) coordinates.
-   * @param {Array<Tiny.Physics.P2.Body|Tiny.Sprite|p2.Body>} [bodies] - A list of objects to check for intersection. If not given it will check Tiny.Physics.P2.world.bodies (i.e. all world bodies)
-   * @param {number} [precision=5] - Used for matching against particles and lines. Adds some margin to these infinitesimal objects.
-   * @param {boolean} [filterStatic=false] - If true all Static objects will be removed from the results array.
-   * @return {Array} Array of bodies that overlap the point.
-   */
+  * Test if a world point overlaps bodies. You will get an array of actual P2 bodies back. You can find out which Sprite a Body belongs to
+  * (if any) by checking the Body.parent.sprite property. Body.parent is a Tiny.Physics.P2.Body property.
+  *
+  * @method Tiny.Physics.P2.World#hitTest
+  * @param {Tiny.Point} worldPoint - Point to use for intersection tests. The points values must be in world (pixel) coordinates.
+  * @param {Array<Tiny.Physics.P2.Body|Tiny.Sprite|p2.Body>} [bodies] - A list of objects to check for intersection. If not given it will check Tiny.Physics.P2.world.bodies (i.e. all world bodies)
+  * @param {number} [precision=5] - Used for matching against particles and lines. Adds some margin to these infinitesimal objects.
+  * @param {boolean} [filterStatic=false] - If true all Static objects will be removed from the results array.
+  * @return {Array} Array of bodies that overlap the point.
+  */
   hitTest(worldPoint, bodies, precision, filterStatic) {
     if (bodies === undefined) { bodies = this.world.bodies; }
     if (precision === undefined) { precision = 5; }
@@ -880,12 +958,12 @@ export default class World extends Tiny.EventEmitter {
   }
 
   /**
-   * Checks the given object to see if it has a p2.Body and if so returns it.
-   *
-   * @method Tiny.Physics.P2#getBody
-   * @param {object} object - The object to check for a p2.Body on.
-   * @return {p2.Body} The p2.Body, or null if not found.
-   */
+  * Checks the given object to see if it has a p2.Body and if so returns it.
+  *
+  * @method Tiny.Physics.P2.World#getBody
+  * @param {object} object - The object to check for a p2.Body on.
+  * @return {p2.Body} The p2.Body, or null if not found.
+  */
   getBody(object) {
     if (object instanceof p2.Body) {
       //  Native p2 body
@@ -903,7 +981,7 @@ export default class World extends Tiny.EventEmitter {
   /**
   * Populates and returns an array with references to of all current Bodies in the world.
   *
-  * @method Tiny.Physics.P2#getBodies
+  * @method Tiny.Physics.P2.World#getBodies
   * @return {array<Tiny.Physics.P2.Body>} An array containing all current Bodies in the world.
   */
   getBodies() {
@@ -916,12 +994,12 @@ export default class World extends Tiny.EventEmitter {
   }
 
   /**
-   * Adds a Spring to the world.
-   *
-   * @method Tiny.Physics.P2#addSpring
-   * @param {Tiny.Physics.P2.Spring|p2.LinearSpring|p2.RotationalSpring} spring - The Spring to add to the World.
-   * @return {Tiny.Physics.P2.Spring} The Spring that was added.
-   */
+  * Adds a Spring to the world.
+  *
+  * @method Tiny.Physics.P2.World#addSpring
+  * @param {Tiny.Physics.P2.Spring|p2.LinearSpring|p2.RotationalSpring} spring - The Spring to add to the World.
+  * @return {Tiny.Physics.P2.Spring} The Spring that was added.
+  */
   addSpring(spring) {
     if (spring instanceof Spring || spring instanceof RotationalSpring) {
       this.world.addSpring(spring.data);
@@ -933,20 +1011,20 @@ export default class World extends Tiny.EventEmitter {
   }
 
   /**
-   * Creates a linear spring, connecting two bodies. A spring can have a resting length, a stiffness and damping.
-   *
-   * @method Tiny.Physics.P2#createSpring
-   * @param {Tiny.Sprite|Tiny.Physics.P2.Body|p2.Body} bodyA - First connected body.
-   * @param {Tiny.Sprite|Tiny.Physics.P2.Body|p2.Body} bodyB - Second connected body.
-   * @param {number} [restLength=1] - Rest length of the spring. A number > 0.
-   * @param {number} [stiffness=100] - Stiffness of the spring. A number >= 0.
-   * @param {number} [damping=1] - Damping of the spring. A number >= 0.
-   * @param {Array} [worldA] - Where to hook the spring to body A in world coordinates. This value is an array by 2 elements, x and y, i.e: [32, 32].
-   * @param {Array} [worldB] - Where to hook the spring to body B in world coordinates. This value is an array by 2 elements, x and y, i.e: [32, 32].
-   * @param {Array} [localA] - Where to hook the spring to body A in local body coordinates. This value is an array by 2 elements, x and y, i.e: [32, 32].
-   * @param {Array} [localB] - Where to hook the spring to body B in local body coordinates. This value is an array by 2 elements, x and y, i.e: [32, 32].
-   * @return {Tiny.Physics.P2.Spring} The spring
-   */
+  * Creates a linear spring, connecting two bodies. A spring can have a resting length, a stiffness and damping.
+  *
+  * @method Tiny.Physics.P2.World#createSpring
+  * @param {Tiny.Sprite|Tiny.Physics.P2.Body|p2.Body} bodyA - First connected body.
+  * @param {Tiny.Sprite|Tiny.Physics.P2.Body|p2.Body} bodyB - Second connected body.
+  * @param {number} [restLength=1] - Rest length of the spring. A number > 0.
+  * @param {number} [stiffness=100] - Stiffness of the spring. A number >= 0.
+  * @param {number} [damping=1] - Damping of the spring. A number >= 0.
+  * @param {Array} [worldA] - Where to hook the spring to body A in world coordinates. This value is an array by 2 elements, x and y, i.e: [32, 32].
+  * @param {Array} [worldB] - Where to hook the spring to body B in world coordinates. This value is an array by 2 elements, x and y, i.e: [32, 32].
+  * @param {Array} [localA] - Where to hook the spring to body A in local body coordinates. This value is an array by 2 elements, x and y, i.e: [32, 32].
+  * @param {Array} [localB] - Where to hook the spring to body B in local body coordinates. This value is an array by 2 elements, x and y, i.e: [32, 32].
+  * @return {Tiny.Physics.P2.Spring} The spring
+  */
   createSpring(bodyA, bodyB, restLength, stiffness, damping, worldA, worldB, localA, localB) {
     bodyA = this.getBody(bodyA);
     bodyB = this.getBody(bodyB);
@@ -960,7 +1038,7 @@ export default class World extends Tiny.EventEmitter {
   /**
   * Creates a rotational spring, connecting two bodies. A spring can have a resting length, a stiffness and damping.
   *
-  * @method Tiny.Physics.P2#createRotationalSpring
+  * @method Tiny.Physics.P2.World#createRotationalSpring
   * @param {Tiny.Sprite|Tiny.Physics.P2.Body|p2.Body} bodyA - First connected body.
   * @param {Tiny.Sprite|Tiny.Physics.P2.Body|p2.Body} bodyB - Second connected body.
   * @param {number} [restAngle] - The relative angle of bodies at which the spring is at rest. If not given, it's set to the current relative angle between the bodies.
@@ -981,7 +1059,7 @@ export default class World extends Tiny.EventEmitter {
   /**
   * Removes a Spring from the world.
   *
-  * @method Tiny.Physics.P2#removeSpring
+  * @method Tiny.Physics.P2.World#removeSpring
   * @param {Tiny.Physics.P2.Spring} spring - The Spring to remove from the World.
   * @return {Tiny.Physics.P2.Spring} The Spring that was removed.
   */
@@ -998,7 +1076,7 @@ export default class World extends Tiny.EventEmitter {
   /**
   * Populates and returns an array of all current Springs in the world.
   *
-  * @method Tiny.Physics.P2#getSprings
+  * @method Tiny.Physics.P2.World#getSprings
   * @return {array<Tiny.Physics.P2.Spring>} An array containing all current Springs in the world.
   */
   getSprings() {
@@ -1015,7 +1093,7 @@ export default class World extends Tiny.EventEmitter {
   * You will get an array of p2 constraints back. This can be of mixed types, for example the array may contain
   * PrismaticConstraints, RevoluteConstraints or any other valid p2 constraint type.
   *
-  * @method Tiny.Physics.P2#getConstraints
+  * @method Tiny.Physics.P2.World#getConstraints
   * @return {array<Tiny.Physics.P2.Constraint>} An array containing all current Constraints in the world.
   */
   getConstraints() {
@@ -1030,7 +1108,7 @@ export default class World extends Tiny.EventEmitter {
   /**
   * Locks the relative position between two bodies.
   *
-  * @method Tiny.Physics.P2#createLockConstraint
+  * @method Tiny.Physics.P2.World#createLockConstraint
   * @param {Tiny.Sprite|Tiny.Physics.P2.Body|p2.Body} bodyA - First connected body.
   * @param {Tiny.Sprite|Tiny.Physics.P2.Body|p2.Body} bodyB - Second connected body.
   * @param {Array} [offset] - The offset of bodyB in bodyA's frame. The value is an array with 2 elements matching x and y, i.e: [32, 32].
@@ -1049,17 +1127,17 @@ export default class World extends Tiny.EventEmitter {
   }
 
   /**
-   * Creates a constraint that tries to keep the distance between two bodies constant.
-   *
-   * @method Tiny.Physics.P2#createDistanceConstraint
-   * @param {Tiny.Sprite|Tiny.Physics.P2.Body|p2.Body} bodyA - First connected body.
-   * @param {Tiny.Sprite|Tiny.Physics.P2.Body|p2.Body} bodyB - Second connected body.
-   * @param {number} distance - The distance to keep between the bodies.
-   * @param {Array} [localAnchorA] - The anchor point for bodyA, defined locally in bodyA frame. Defaults to [0,0].
-   * @param {Array} [localAnchorB] - The anchor point for bodyB, defined locally in bodyB frame. Defaults to [0,0].
-   * @param {number} [maxForce] - The maximum force that should be applied to constrain the bodies.
-   * @return {Tiny.Physics.P2.DistanceConstraint} The constraint
-   */
+  * Creates a constraint that tries to keep the distance between two bodies constant.
+  *
+  * @method Tiny.Physics.P2.World#createDistanceConstraint
+  * @param {Tiny.Sprite|Tiny.Physics.P2.Body|p2.Body} bodyA - First connected body.
+  * @param {Tiny.Sprite|Tiny.Physics.P2.Body|p2.Body} bodyB - Second connected body.
+  * @param {number} distance - The distance to keep between the bodies.
+  * @param {Array} [localAnchorA] - The anchor point for bodyA, defined locally in bodyA frame. Defaults to [0,0].
+  * @param {Array} [localAnchorB] - The anchor point for bodyB, defined locally in bodyB frame. Defaults to [0,0].
+  * @param {number} [maxForce] - The maximum force that should be applied to constrain the bodies.
+  * @return {Tiny.Physics.P2.DistanceConstraint} The constraint
+  */
   createDistanceConstraint(bodyA, bodyB, distance, localAnchorA, localAnchorB, maxForce) {
     bodyA = this.getBody(bodyA);
     bodyB = this.getBody(bodyB);
@@ -1073,7 +1151,7 @@ export default class World extends Tiny.EventEmitter {
   /**
   * Creates a constraint that tries to keep the distance between two bodies constant.
   *
-  * @method Tiny.Physics.P2#createGearConstraint
+  * @method Tiny.Physics.P2.World#createGearConstraint
   * @param {Tiny.Sprite|Tiny.Physics.P2.Body|p2.Body} bodyA - First connected body.
   * @param {Tiny.Sprite|Tiny.Physics.P2.Body|p2.Body} bodyB - Second connected body.
   * @param {number} [angle=0] - The relative angle
@@ -1094,7 +1172,7 @@ export default class World extends Tiny.EventEmitter {
   * Connects two bodies at given offset points, letting them rotate relative to each other around this point.
   * The pivot points are given in world (pixel) coordinates.
   *
-  * @method Tiny.Physics.P2#createRevoluteConstraint
+  * @method Tiny.Physics.P2.World#createRevoluteConstraint
   * @param {Tiny.Sprite|Tiny.Physics.P2.Body|p2.Body} bodyA - First connected body.
   * @param {Array} pivotA - The point relative to the center of mass of bodyA which bodyA is constrained to. The value is an array with 2 elements matching x and y, i.e: [32, 32].
   * @param {Tiny.Sprite|Tiny.Physics.P2.Body|p2.Body} bodyB - Second connected body.
@@ -1114,19 +1192,20 @@ export default class World extends Tiny.EventEmitter {
   }
 
   /**
-   * Constraint that only allows bodies to move along a line, relative to each other.
-   * See http://www.iforce2d.net/b2dtut/joints-prismatic
-   *
-   * @method Tiny.Physics.P2#createPrismaticConstraint
-   * @param {Tiny.Sprite|Tiny.Physics.P2.Body|p2.Body} bodyA - First connected body.
-   * @param {Tiny.Sprite|Tiny.Physics.P2.Body|p2.Body} bodyB - Second connected body.
-   * @param {boolean} [lockRotation=true] - If set to false, bodyB will be free to rotate around its anchor point.
-   * @param {Array} [anchorA] - Body A's anchor point, defined in its own local frame. The value is an array with 2 elements matching x and y, i.e: [32, 32].
-   * @param {Array} [anchorB] - Body A's anchor point, defined in its own local frame. The value is an array with 2 elements matching x and y, i.e: [32, 32].
-   * @param {Array} [axis] - An axis, defined in body A frame, that body B's anchor point may slide along. The value is an array with 2 elements matching x and y, i.e: [32, 32].
-   * @param {number} [maxForce] - The maximum force that should be applied to constrain the bodies.
-   * @return {Tiny.Physics.P2.PrismaticConstraint} The constraint
-   */
+  * Constraint that only allows bodies to move along a line, relative to each other.
+  * See http://www.iforce2d.net/b2dtut/joints-prismatic
+  *
+  * @method Tiny.Physics.P2.World#createPrismaticConstraint
+  * @param {Tiny.Sprite|Tiny.Physics.P2.Body|p2.Body} bodyA - First connected body.
+  * @param {Tiny.Sprite|Tiny.Physics.P2.Body|p2.Body} bodyB - Second connected body.
+  * @param {boolean} [lockRotation=true] - If set to false, bodyB will be free to rotate around its anchor point.
+  * @param {Array} [anchorA] - Body A's anchor point, defined in its own local frame. The value is an array with 2 elements matching x and y, i.e: [32, 32].
+  * @param {Array} [anchorB] - Body A's anchor point, defined in its own local frame. The value is an array with 2 elements matching x and y, i.e: [32, 32].
+  * @param {Array} [axis] - An axis, defined in body A frame, that body B's anchor point may slide along. The value is an array with 2 elements matching x and y, i.e: [32, 32].
+  * @param {number} [maxForce] - The maximum force that should be applied to constrain the bodies.
+  * @return {Tiny.Physics.P2.PrismaticConstraint} The constraint
+  * @see {@link http://www.iforce2d.net/b2dtut/joints-prismatic}
+  */
   createPrismaticConstraint(bodyA, bodyB, lockRotation, anchorA, anchorB, axis, maxForce) {
     bodyA = this.getBody(bodyA);
     bodyB = this.getBody(bodyB);
@@ -1140,7 +1219,7 @@ export default class World extends Tiny.EventEmitter {
   /**
   * Adds a Constraint to the world.
   *
-  * @method Tiny.Physics.P2#addConstraint
+  * @method Tiny.Physics.P2.World#addConstraint
   * @param {Tiny.Physics.P2.Constraint} constraint - The Constraint to add to the World.
   * @return {Tiny.Physics.P2.Constraint} The Constraint that was added.
   */
@@ -1153,7 +1232,7 @@ export default class World extends Tiny.EventEmitter {
   /**
   * Removes a Constraint from the world.
   *
-  * @method Tiny.Physics.P2#removeConstraint
+  * @method Tiny.Physics.P2.World#removeConstraint
   * @param {Tiny.Physics.P2.Constraint} constraint - The Constraint to be removed from the World.
   * @return {Tiny.Physics.P2.Constraint} The Constraint that was removed.
   */
@@ -1166,7 +1245,7 @@ export default class World extends Tiny.EventEmitter {
   /**
    * Adds a Contact Material to the world.
    *
-   * @method Tiny.Physics.P2#addContactMaterial
+   * @method Tiny.Physics.P2.World#addContactMaterial
    * @param {Tiny.Physics.P2.ContactMaterial} material - The Contact Material to be added to the World.
    * @return {Tiny.Physics.P2.ContactMaterial} The Contact Material that was added.
    */
@@ -1175,10 +1254,11 @@ export default class World extends Tiny.EventEmitter {
     this.dispatch(EVENTS.ON_CONTACTMATERIAL_ADDED, material);
     return material;
   }
+
   /**
    * Removes a Contact Material from the world.
    *
-   * @method Tiny.Physics.P2#removeContactMaterial
+   * @method Tiny.Physics.P2.World#removeContactMaterial
    * @param {Tiny.Physics.P2.ContactMaterial} material - The Contact Material to be removed from the World.
    * @return {Tiny.Physics.P2.ContactMaterial} The Contact Material that was removed.
    */
@@ -1191,7 +1271,7 @@ export default class World extends Tiny.EventEmitter {
   /**
   * Gets a Contact Material based on the two given Materials.
   *
-  * @method Tiny.Physics.P2#getContactMaterial
+  * @method Tiny.Physics.P2.World#getContactMaterial
   * @param {Tiny.Physics.P2.Material} materialA - The first Material to search for.
   * @param {Tiny.Physics.P2.Material} materialB - The second Material to search for.
   * @return {Tiny.Physics.P2.ContactMaterial|boolean} The Contact Material or false if none was found matching the Materials given.
@@ -1203,7 +1283,7 @@ export default class World extends Tiny.EventEmitter {
   /**
   * Sets the given Material against all Shapes owned by all the Bodies in the given array.
   *
-  * @method Tiny.Physics.P2#setMaterial
+  * @method Tiny.Physics.P2.World#setMaterial
   * @param {Tiny.Physics.P2.Material} material - The Material to be applied to the given Bodies.
   * @param {array<Tiny.Physics.P2.Body>} bodies - An Array of Body objects that the given Material will be set on.
   */
@@ -1215,15 +1295,15 @@ export default class World extends Tiny.EventEmitter {
   }
 
   /**
-     * Creates a Material. Materials are applied to Shapes owned by a Body and can be set with Body.setMaterial().
-     * Materials are a way to control what happens when Shapes collide. Combine unique Materials together to create Contact Materials.
-     * Contact Materials have properties such as friction and restitution that allow for fine-grained collision control between different Materials.
-     *
-     * @method Tiny.Physics.P2#createMaterial
-     * @param {string} [name] - Optional name of the Material. Each Material has a unique ID but string names are handy for debugging.
-     * @param {Tiny.Physics.P2.Body} [body] - Optional Body. If given it will assign the newly created Material to the Body shapes.
-     * @return {Tiny.Physics.P2.Material} The Material that was created. This is also stored in Tiny.Physics.P2.materials.
-     */
+  * Creates a Material. Materials are applied to Shapes owned by a Body and can be set with Body.setMaterial().
+  * Materials are a way to control what happens when Shapes collide. Combine unique Materials together to create Contact Materials.
+  * Contact Materials have properties such as friction and restitution that allow for fine-grained collision control between different Materials.
+  *
+  * @method Tiny.Physics.P2.World#createMaterial
+  * @param {string} [name] - Optional name of the Material. Each Material has a unique ID but string names are handy for debugging.
+  * @param {Tiny.Physics.P2.Body} [body] - Optional Body. If given it will assign the newly created Material to the Body shapes.
+  * @return {Tiny.Physics.P2.Material} The Material that was created. This is also stored in Tiny.Physics.P2.materials.
+  */
   createMaterial(name, body) {
     name = name || '';
     const material = new Material(name);
@@ -1237,7 +1317,7 @@ export default class World extends Tiny.EventEmitter {
   /**
    * Creates a Contact Material from the two given Materials. You can then edit the properties of the Contact Material directly.
    *
-   * @method Tiny.Physics.P2#createContactMaterial
+   * @method Tiny.Physics.P2.World#createContactMaterial
    * @param {Tiny.Physics.P2.Material} [materialA] - The first Material to create the ContactMaterial from. If undefined it will create a new Material object first.
    * @param {Tiny.Physics.P2.Material} [materialB] - The second Material to create the ContactMaterial from. If undefined it will create a new Material object first.
    * @param {object} [options] - Material options object.
@@ -1254,7 +1334,7 @@ export default class World extends Tiny.EventEmitter {
   * Creates a new Collision Group and optionally applies it to the given object.
   * Collision Groups are handled using bitmasks, therefore you have a fixed limit you can create before you need to re-use older groups.
   *
-  * @method Tiny.Physics.P2#createCollisionGroup
+  * @method Tiny.Physics.P2.World#createCollisionGroup
   * @param {Tiny.Group|Tiny.Sprite} [object] - An optional Sprite or Group to apply the Collision Group to. If a Group is given it will be applied to all top-level children.
   */
   createCollisionGroup(object) {
@@ -1284,12 +1364,12 @@ export default class World extends Tiny.EventEmitter {
   * Sets the given CollisionGroup to be the collision group for all shapes in this Body, unless a shape is specified.
   * Note that this resets the collisionMask and any previously set groups. See Body.collides() for appending them.
   *
-  * @method Tiny.Physics.P2y#setCollisionGroup
+  * @method Tiny.Physics.P2.World#setCollisionGroup
   * @param {Tiny.Group|Tiny.Sprite} object - A Sprite or Group to apply the Collision Group to. If a Group is given it will be applied to all top-level children.
   * @param {Tiny.Physics.CollisionGroup} group - The Collision Group that this Bodies shapes will use.
   */
   setCollisionGroup(object, group) {
-    if (object instanceof Container) {
+    if (object instanceof Group) {
       for (let i = 0; i < object.total; i++) {
         if (object.children[i]['body'] && object.children[i]['body'].type === BODY_TYPE) {
           object.children[i].body.setCollisionGroup(group);
@@ -1301,12 +1381,12 @@ export default class World extends Tiny.EventEmitter {
   }
 
   /**
-   * Handles a p2 impact event.
-   *
-   * @method Tiny.Physics.P2#impactHandler
-   * @private
-   * @param {object} event - The event data.
-   */
+  * Handles a p2 impact event.
+  *
+  * @method Tiny.Physics.P2.World#impactHandler
+  * @private
+  * @param {object} event - The event data.
+  */
   impactHandler(event) {
     if (event.bodyA.parent && event.bodyB.parent) {
       //  Body vs. Body callbacks
@@ -1331,11 +1411,12 @@ export default class World extends Tiny.EventEmitter {
       }
     }
   }
+
   /**
   * Impact event handling is disabled by default. Enable it before any impact events will be dispatched.
   * In a busy world hundreds of impact events can be generated every step, so only enable this if you cannot do what you need via beginContact or collision masks.
   *
-  * @method Tiny.Physics.P2#setImpactEvents
+  * @method Tiny.Physics.P2.World#setImpactEvents
   * @param {boolean} state - Set to true to enable impact events, or false to disable.
   */
   setupImpactEvents(enable = true) {
@@ -1348,3 +1429,5 @@ export default class World extends Tiny.EventEmitter {
     this._impactEvents = enable;
   }
 }
+
+export default World;
