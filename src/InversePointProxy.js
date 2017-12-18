@@ -61,5 +61,4 @@ class InversePointProxy {
   }
 }
 
-
 export default InversePointProxy;
