@@ -4,7 +4,7 @@
 
 ## 查看demo
 
-`demo/index.html`
+http://tinyjs.net/#/plugins/tinyjs-plugin-p2/demo
 
 ## P2
 > P2 物理引擎
@@ -14,11 +14,11 @@
 - 推荐作为依赖使用
 
   - `npm install tinyjs-plugin-p2 --save`
-  - 或者使用 ./dist/index.js 或者./dist/index.debug.js
+
 - 也可以直接引用线上cdn地址，注意要使用最新的版本号，例如：
 
-  - https://gw.alipayobjects.com/as/g/tiny-plugins/tinyjs-plugin-p2/0.0.3/index.debug.js
-  - https://gw.alipayobjects.com/as/g/tiny-plugins/tinyjs-plugin-p2/0.0.3/index.js
+  - https://gw.alipayobjects.com/as/g/tiny-plugins/tinyjs-plugin-p2/0.1.1/index.debug.js
+  - https://gw.alipayobjects.com/as/g/tiny-plugins/tinyjs-plugin-p2/0.1.1/index.js
 
 ## 起步
 首先当然是要引入，推荐`NPM`方式，当然你也可以使用`CDN`或下载独立版本，先从几个例子入手吧！
@@ -27,11 +27,14 @@
 
 引用 Tiny.js 源码
 ``` html
-<script src="http://tinyjs.net/libs/tiny.debug.js"></script>
+<script src="https://gw.alipayobjects.com/as/g/tiny/tiny/1.1.5/tiny.js"></script>
 ```
 ``` js
 var p2 = require('tinyjs-plugin-p2');
 ```
+
+## 依赖
+- `Tiny.js`: [Link](http://tinyjs.net/#/docs/api)
 
 ## 相关文档
 - [Tiny.js](http://tinyjs.net/#/docs/api)
@@ -39,11 +42,4 @@ var p2 = require('tinyjs-plugin-p2');
 - [p2](https://github.com/schteppe/p2.js)
 
 ## API文档
-  待完善
-
-## demo
- ./demo
-
-## TODO
-
-+ 精简p2 ，把不常用的代码抽离出来，以插拔的形式
+http://tinyjs.net/#/plugins/tinyjs-plugin-p2/docs
