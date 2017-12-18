@@ -119,7 +119,7 @@ class BodyDebug extends Tiny.Sprite {
           verts = [];
           vrot = p2.vec2.create();
 
-          for (j = _j = 0, _ref1 = child.vertices.length; 0 <= _ref1 ? _j < _ref1 : _j > _ref1; j = 0 <= _ref1 ? ++_j : --_j) {
+          for (j = _j = 0, _ref1 = child.vertices.length; _ref1 >= 0 ? _j < _ref1 : _j > _ref1; j = _ref1 >= 0 ? ++_j : --_j) {
             v = child.vertices[j];
             p2.vec2.rotate(vrot, v, angle);
             verts.push([(vrot[0] + offset[0]) * this.ppu, -(vrot[1] + offset[1]) * this.ppu]);
@@ -250,7 +250,7 @@ class BodyDebug extends Tiny.Sprite {
 
     g.lineStyle(lineWidth, color, 1);
 
-    if (typeof fillColor === "number") {
+    if (typeof fillColor === 'number') {
       g.beginFill(fillColor);
     }
 
@@ -304,11 +304,10 @@ class BodyDebug extends Tiny.Sprite {
   * @private
   */
   drawPlane(g, x0, x1, color = 0xffffff, lineColor, lineWidth = 1, diagMargin, diagSize, maxLength, angle) {
-    let max, xd, yd;
+    let xd, yd;
 
     g.lineStyle(lineWidth, lineColor, 11);
     g.beginFill(color);
-    max = maxLength;
 
     g.moveTo(x0, -x1);
     xd = x0 + Math.cos(angle) * this.game.width;

@@ -20,8 +20,8 @@ function extend(a, b) {
 * @private
 */
 function randomPastelHex() {
-  let blue, green, mix, red;
-  mix = [255, 255, 255];
+  let blue, green, red;
+  const mix = [255, 255, 255];
 
   red = Math.floor(Math.random() * 256);
   green = Math.floor(Math.random() * 256);

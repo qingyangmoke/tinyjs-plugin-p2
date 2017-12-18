@@ -18,7 +18,6 @@ class RotationalSpring {
   * @param {number} [damping=1] - Damping of the spring. A number >= 0.
   */
   constructor(world, bodyA, bodyB, restAngle = null, stiffness = 100, damping = 1) {
-
     if (restAngle) {
       restAngle = world.pxm(restAngle);
     }
