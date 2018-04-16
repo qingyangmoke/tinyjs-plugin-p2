@@ -356,7 +356,13 @@ class World extends Tiny.EventEmitter {
     const bodies = this.world.bodies;
 
     for (let i = bodies.length - 1; i >= 0; i--) {
-      this.world.removeBody(bodies[i]);
+      // this.world.removeBody(bodies[i]);
+      const body = bodies[i];
+      if (body.parent) {
+        this.removeBody(body.parent);
+      } else {
+        this.world.removeBody(body);
+      }
     }
 
     // Remove all springs
