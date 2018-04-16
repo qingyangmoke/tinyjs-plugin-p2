@@ -98,6 +98,8 @@
         // data.stopPropagation();
         dragging = true;
         var pos = data.data.getLocalPosition(container);
+        mouseCursor.body.x = pos.x;
+        mouseCursor.body.y = pos.y;
         var bodies = app.physics.p2.hitTest(pos, [ant.body]);
         if (bodies.length) {
           mouseSpring = app.physics.p2.createSpring(mouseCursor, bodies[0], 0, 30, 1);

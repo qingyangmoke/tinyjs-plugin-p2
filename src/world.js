@@ -171,6 +171,12 @@ class World extends Tiny.EventEmitter {
 
     this._impactEvents = false;
 
+    /**
+    * @property {array<Tiny.Physics.P2.Material>} materials - A local array of all created Materials.
+    * @protected
+    */
+    this.materials = [];
+
     this.world.on(EVENTS.ON_BEGIN_CONTACT, this.beginContactHandler, this);
     this.world.on(EVENTS.ON_END_CONTACT, this.endContactHandler, this);
 
@@ -725,7 +731,7 @@ class World extends Tiny.EventEmitter {
   /**
   * Sets the given material against the 4 bounds of this World.
   *
-  * @method Tiny.Physics.P2.World#setWorldMaterial
+  * @method Tiny.Physics.P2.World#setWallMaterial
   * @param {Tiny.Physics.P2.Material} material - The material to set.
   * @param {boolean} [left=true] - If true will set the material on the left bounds wall.
   * @param {boolean} [right=true] - If true will set the material on the right bounds wall.
