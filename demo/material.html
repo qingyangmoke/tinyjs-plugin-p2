@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>basic</title>
+  <title>材质</title>
   <meta charset="utf-8">
   <!-- tiny 基础库 -->
   <script src="https://gw.alipayobjects.com/as/g/tiny/tiny/1.1.5/tiny.js"></script>
@@ -54,29 +54,40 @@
       return sprite;
     }
 
+    function createCircle(app, radius, color) {
+      let graphics = new Tiny.Graphics();
+      graphics.beginFill(color);
+      graphics.arc(0, 0, radius);
+      graphics.bounds = new Tiny.Rectangle(0, 0, radius * 2, radius * 2);
+      var rt = Tiny.RenderTexture.create(radius * 2, radius * 2);
+      app.renderer.render(graphics, rt);
+      let sprite = new Tiny.Sprite(rt);
+      return sprite;
+    }
+
+
     function init() {
 
       container = new Tiny.Container();
 
-      var looptimes = 50;
+      var looptimes = 6;
 
       function getColor() {
         return 0x1000000 + Math.random() * 0x1000000;
       }
 
+      var spriteMaterial = app.physics.p2.createMaterial('spriteMaterial');
+      var wallMaterial = app.physics.p2.createMaterial('wallMaterial');
+
       var timer = setInterval(function () {
         var sprite = createBox(app, 40, 40, getColor());
-        // var sprite = createBox(app, 40, 40, 0xffffff);
-        sprite.position.x = 50 + Math.floor(Math.random() * 200);
+        sprite.position.x = config.width / 2 + 30;
         sprite.position.y = 100;
-        // sprite.scale.set(.5);
 
         app.physics.p2.enable(sprite, true);
-
-        // sprite.body.angularVelocity = -10;
         sprite.body.mass = 1;
 
-        sprite.body.setCircle(10);
+        sprite.body.setMaterial(spriteMaterial);
 
         container.addChild(sprite);
 
@@ -85,24 +96,20 @@
         }
       }, 1000);
 
+      app.physics.p2.setWallMaterial(wallMaterial, false, false, false, true);
 
-      sprite2 = createBox(app, 100, 50, 0xffffff);
-      sprite2.position.x = 100;
-      sprite2.position.y = 500;
-      app.physics.p2.enable(sprite2, true);
+      var groundPlayerCM = app.physics.p2.createContactMaterial(spriteMaterial, wallMaterial, { friction: 0.6 });
+      var spriteCM = app.physics.p2.createContactMaterial(spriteMaterial, spriteMaterial, { friction: 0 });
 
-      sprite2.body.static = true;
-      sprite2.body.on('shapeChanged', function (a) {
-        console.log('shapeChanged', a)
-      })
+      staticBox = createCircle(app, 50, 0xffffff);
+      staticBox.position.x = config.width / 2;
+      staticBox.position.y = 300;
+      app.physics.p2.enable(staticBox, true);
+      staticBox.body.setCircle(25);
 
-      sprite2.body.on('beginContact', function (bodyB, shapeB, bodyA, shapeA) {
-        // console.log(bodyB, shapeB, bodyA, shapeA);
-        // bodyB.sprite.body.removeFromWorld();
-        // bodyB.sprite.parent.removeChild(bodyB.sprite);
-      });
+      staticBox.body.static = true;
 
-      container.addChild(sprite2);
+      container.addChild(staticBox);
       app.run(container);
 
       // 新版本做了适配 对stage 的scale做了调整 所以这里debug层处理一下

@@ -86,13 +86,13 @@
       mouseCursor.body.static = true;
       mouseCursor.body.setCircle(10);
       mouseCursor.body.data.shapes[0].sensor = true;
-
       container.setEventEnabled(true);
 
       let dragging = false;
       let mouseSpring = null;
       container.mousedown = container.touchstart = function (data) {
         dragging = true;
+        console.log('touchstart');
       };
 
       container.mouseup = container.mouseupoutside
@@ -101,9 +101,11 @@
         };
 
       container.mousemove = container.touchmove = function (data) {
-        var pos = data.data.getLocalPosition(container);
-        mouseCursor.body.x = pos.x;
-        mouseCursor.body.y = pos.y;
+        if (dragging) {
+          var pos = data.data.getLocalPosition(container);
+          mouseCursor.body.x = pos.x;
+          mouseCursor.body.y = pos.y;
+        }
       }
 
       mouseSpring = app.physics.p2.createSpring(mouseCursor, ant.body, 0, 30, 1);
