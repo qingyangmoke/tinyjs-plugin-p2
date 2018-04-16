@@ -70,6 +70,9 @@ class BodyDebug extends Tiny.Sprite {
       this.world.app.stageDebugLayer.p2 = p2DebugLayer;
     }
 
+    // 新版本做了适配 对stage 的scale做了调整 所以这里debug层处理一下
+    this.world.app.stageDebugLayer.setScale(this.world.app.stage.scale.x, this.world.app.stage.scale.y);
+
     this.world.app.stageDebugLayer.p2.addChild(this);
 
     // this.anchor.set(0.5, 0.5);
@@ -361,7 +364,7 @@ class BodyDebug extends Tiny.Sprite {
     if (this.canvas) {
       // 防止重复销毁
       this.removeChild(this.canvas);
-      this.world.app.stage.addChild(this);
+      this.world.app.stageDebugLayer.p2.removeChild(this);
       this.canvas = null;
     }
   }
