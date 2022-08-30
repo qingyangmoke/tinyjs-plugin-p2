@@ -193,7 +193,7 @@ class World extends Tiny.EventEmitter {
   * @param {boolean} [debug=false] - Create a debug object to go with this body?
   * @param {boolean} [children=true] - Should a body be created on all children of this object? If true it will recurse down the display list as far as it can go.
   */
-  enable(object, debug, children) {
+  enable(object, debug, children, container) {
     if (debug === undefined) { debug = false; }
     if (children === undefined) { children = true; }
 
@@ -204,12 +204,12 @@ class World extends Tiny.EventEmitter {
 
       while (i--) {
         if (object[i] instanceof Group) {
-          this.enable(object[i].children, debug, children);
+          this.enable(object[i].children, debug, children, container);
         } else {
-          this.enableBody(object[i], debug);
+          this.enableBody(object[i], debug, container);
 
           if (children && object[i].hasOwnProperty('children') && object[i].children.length > 0) {
-            this.enable(object[i], debug, true);
+            this.enable(object[i], debug, true, container);
           }
         }
         // this.enableBody(object[i], debug);
@@ -219,11 +219,11 @@ class World extends Tiny.EventEmitter {
       }
     } else {
       if (object instanceof Group) {
-        this.enable(object.children, debug, children);
+        this.enable(object.children, debug, children, container);
       } else {
-        this.enableBody(object, debug);
+        this.enableBody(object, debug, container);
         if (children && object.hasOwnProperty('children') && object.children.length > 0) {
-          this.enable(object.children, debug, true);
+          this.enable(object.children, debug, true, container);
         }
       }
       // this.enableBody(object, debug);
@@ -242,10 +242,10 @@ class World extends Tiny.EventEmitter {
   * @param {object} object - The object to create the physics body on. A body will only be created if this object has a null `body` property.
   * @param {boolean} debug - Create a debug object to go with this body?
   */
-  enableBody(object, debug) {
+  enableBody(object, debug, container) {
     // console.log('enableBody', object.body);
     if (object.body === void 0) {
-      object.body = new Body(this, object, object.x, object.y, 1);
+      object.body = new Body(this, object, object.x, object.y, 1, container);
       object.body.debug = debug;
       if (typeof object.anchor !== 'undefined') {
         object.anchor.set(0.5, 0.5);

@@ -2,9 +2,14 @@
 
 > tiny P2物理引擎
 
+## version
+
+* `Tiny.js < 2`: 请使用 `v0.1.x` 版本
+* `Tiny.js >= 2`: 请使用 `v2.x.x` 版本
+
 ## 查看demo
 
-http://tinyjs.net/#/plugins/tinyjs-plugin-p2/demo
+`/demo/*`
 
 ## P2
 > P2 物理引擎
@@ -17,8 +22,8 @@ http://tinyjs.net/#/plugins/tinyjs-plugin-p2/demo
 
 - 也可以直接引用线上cdn地址，注意要使用最新的版本号，例如：
 
-  - https://gw.alipayobjects.com/as/g/tiny-plugins/tinyjs-plugin-p2/0.1.4/index.debug.js
-  - https://gw.alipayobjects.com/as/g/tiny-plugins/tinyjs-plugin-p2/0.1.4/index.js
+  - https://gw.alipayobjects.com/os/lib/alipay/tiny.js/2.2.0/dist/browser/tiny.debug.js
+  - https://gw.alipayobjects.com/os/lib/alipay/tiny.js/2.2.0/dist/browser/tiny.js
 
 ## 起步
 首先当然是要引入，推荐`NPM`方式，当然你也可以使用`CDN`或下载独立版本，先从几个例子入手吧！
@@ -27,7 +32,7 @@ http://tinyjs.net/#/plugins/tinyjs-plugin-p2/demo
 
 引用 Tiny.js 源码
 ``` html
-<script src="https://gw.alipayobjects.com/as/g/tiny/tiny/1.1.5/tiny.js"></script>
+<script src="https://gw.alipayobjects.com/os/lib/alipay/tiny.js/2.2.0/dist/browser/tiny.debug.js"></script>
 ```
 ``` js
 var p2 = require('tinyjs-plugin-p2');

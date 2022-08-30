@@ -1,8 +1,8 @@
 {
   "name": "tinyjs-plugin-p2",
-  "version": "0.1.4",
-  "author": "清扬陌客",
-  "description": "tinyjs P2物理引擎基础库",
+  "version": "2.0.0",
+  "author": "清扬陌客, yj1438",
+  "description": "Tiny.js P2物理引擎基础库",
   "keywords": [
     "tinyjs",
     "plugin",
@@ -16,9 +16,7 @@
   "main": "dist/index.debug.js",
   "files": [
     "dist",
-    "src",
-    "demo",
-    "test"
+    "src"
   ],
   "scripts": {
     "start": "npm run dev",
