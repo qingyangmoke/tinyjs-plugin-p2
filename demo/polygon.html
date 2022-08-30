@@ -5,7 +5,7 @@
   <title>不规则图形</title>
   <meta charset="utf-8">
   <!-- tiny 基础库 -->
-  <script src="https://gw.alipayobjects.com/as/g/tiny/tiny/1.1.5/tiny.js"></script>
+  <script src="https://gw.alipayobjects.com/os/lib/alipay/tiny.js/2.2.0/dist/browser/tiny.debug.js"></script>
   <script src="../dist/index.debug.js"></script>
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2,minimum-scale=1,user-scalable=1">
   <style type="text/css">
@@ -23,17 +23,16 @@
 
   <script>
     var config = {
-      showFPS: true, // 显示帧频
-      dpi: 1, // 分辨率
-      width: 320,
-      height: 568,
-      fixSize: true,
+      width: 750,
+      height: 1334,
       renderOptions: {
         backgroundColor: 0x2a3145 // 画布背景色
       }
     };
 
     var app = new Tiny.Application(config);
+    document.body.append(app.view);
+    
     Tiny.Physics.P2.startSystem(app, {
       gravity: [0, 0]
     });
@@ -52,27 +51,28 @@
     }
 
     var sprite;
-    function init() {
+    function init(resources) {
       container = new Tiny.Container();
+      app.run(container);
 
       setTitle('不规则图形测试', container);
 
       //  设置回弹系数 增加小人落到地上的回跳效果
       app.physics.p2.restitution = 0.3;
 
-      sprite = new Tiny.Sprite(Tiny.Loader.resources['contra2'].texture);
+      sprite = new Tiny.Sprite(resources['contra2'].texture);
       sprite.position.x = Tiny.WIN_SIZE.width / 2;
       sprite.position.y = 200;
 
       // 加入物理系统
       app.physics.p2.enable(sprite, true);
-      sprite.body.loadPolygon(Tiny.Loader.resources['physicsData'].data.contra2);
+      sprite.body.loadPolygon(resources['physicsData'].data.contra2);
       sprite.body.setZeroDamping();
       sprite.body.angularVelocity = Math.PI;
 
       container.addChild(sprite);
 
-      wizball = new Tiny.Sprite(Tiny.Loader.resources['wizball'].texture);
+      wizball = new Tiny.Sprite(resources['wizball'].texture);
       wizball.position.x = Tiny.WIN_SIZE.width / 2;
       wizball.position.y = 400;
 
@@ -85,16 +85,16 @@
 
       container.addChild(wizball);
 
-      app.run(container);
     }
 
-    Tiny.Loader
+    const loader = new Tiny.loaders.Loader();
+
+    loader
       .add('wizball', 'images/wizball.png')
       .add('contra2', 'images/contra2.png')
       .add('physicsData', 'physics/sprites.json')
-      .load(function (a, b) {
-        console.log(a, b);
-        init();
+      .load(function (loader, resource) {
+        init(resource);
       });
   </script>
 </body>

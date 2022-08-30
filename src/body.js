@@ -37,7 +37,7 @@ class Body extends Tiny.EventEmitter {
   * @param {number} [y=0] - The y coordinate of this Body.
   * @param {number} [mass=1] - The default mass of this Body (0 = static).
    */
-  constructor(world, sprite, x, y, mass) {
+  constructor(world, sprite, x, y, mass, container) {
     super();
     sprite = sprite || null;
     x = x || 0;
@@ -49,6 +49,8 @@ class Body extends Tiny.EventEmitter {
      * @property {Tiny.Physics.P2} world - Local reference to the P2 World.
      */
     this.world = world;
+
+    this.container = container;
 
     /**
     * @name Tiny.Physics.P2.Body#app

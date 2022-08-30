@@ -60,13 +60,16 @@ class BodyDebug extends Tiny.Sprite {
       // 这里参考 Tiny.Application中的stage的写法 创建了一个一样的layer
       const stageDebugLayer = new Tiny.Container();
       stageDebugLayer.scale.set(Tiny.config.multiplier);
-      this.world.app.camera.addChild(stageDebugLayer);
+      this.world.app.stage.addChild(stageDebugLayer);
+      stageDebugLayer.name = 'stageDebugLayer';
       this.world.app.stageDebugLayer = stageDebugLayer;
     }
 
     if (this.world.app.stageDebugLayer.p2 === void 0) {
       const p2DebugLayer = new Tiny.Container();
       this.world.app.stageDebugLayer.addChild(p2DebugLayer);
+      p2DebugLayer.name = 'p2DebugLayer';
+      p2DebugLayer.scale.set(Tiny.config.dpi);
       this.world.app.stageDebugLayer.p2 = p2DebugLayer;
     }
 

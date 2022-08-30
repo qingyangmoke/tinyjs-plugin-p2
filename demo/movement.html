@@ -5,7 +5,7 @@
   <title>蚂蚁超人-给我力量</title>
   <meta charset="utf-8">
   <!-- tiny 基础库 -->
-  <script src="https://gw.alipayobjects.com/as/g/tiny/tiny/1.1.5/tiny.js"></script>
+  <script src="https://gw.alipayobjects.com/os/lib/alipay/tiny.js/2.2.0/dist/browser/tiny.debug.js"></script>
   <script src="../dist/index.debug.js"></script>
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2,minimum-scale=1,user-scalable=1">
   <style type="text/css">
@@ -23,17 +23,16 @@
 
   <script>
     var config = {
-      showFPS: true, // 显示帧频
-      dpi: 1, // 分辨率
-      width: 320,
-      height: 568,
-      fixSize: true,
+      width: 750,
+      height: 1334,
       renderOptions: {
         backgroundColor: 0x2a3145 // 画布背景色
       }
     };
 
     var app = new Tiny.Application(config);
+    document.body.append(app.view);
+
     Tiny.Physics.P2.startSystem(app, {
       gravity: [0, 9.82]
     });
@@ -60,8 +59,9 @@
     }
 
     var sprite;
-    function init() {
+    function init(resource) {
       container = new Tiny.Container();
+      app.run(container);
 
       setTitle('我是蚂蚁超人，点我给我力量', container);
 
@@ -71,7 +71,7 @@
       // 去掉顶部的边界 小人可以向上飞出屏幕
       app.physics.p2.setupWall(false, 'top');
 
-      sprite = new Tiny.Sprite(Tiny.Loader.resources['antImage'].texture);
+      sprite = new Tiny.Sprite(resource['antImage'].texture);
       // sprite = createBox(app, 40, 40, 0xffffff);
       sprite.position.x = Tiny.WIN_SIZE.width / 2;
       sprite.position.y = 100;
@@ -100,13 +100,14 @@
 
       container.addChild(sprite);
 
-      app.run(container);
     }
 
-    Tiny.Loader
+    const loader = new Tiny.loaders.Loader
+
+    loader
       .add('antImage', 'images/super_ant.png')
-      .load(function () {
-        init();
+      .load(function (loader, resource) {
+        init(resource);
       });
   </script>
 </body>

@@ -5,7 +5,7 @@
   <title>Mouse Spring</title>
   <meta charset="utf-8">
   <!-- tiny 基础库 -->
-  <script src="https://gw.alipayobjects.com/as/g/tiny/tiny/1.1.5/tiny.js"></script>
+  <script src="https://gw.alipayobjects.com/os/lib/alipay/tiny.js/2.2.0/dist/browser/tiny.debug.js"></script>
   <script src="../dist/index.debug.js"></script>
   <script src="utils/DebugLine.js"></script>
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2,minimum-scale=1,user-scalable=1">
@@ -24,17 +24,16 @@
 
   <script>
     var config = {
-      showFPS: true, // 显示帧频
-      dpi: 1, // 分辨率
-      width: 320,
-      height: 568,
-      fixSize: true,
+      width: 750,
+      height: 1334,
       renderOptions: {
         backgroundColor: 0x2a3145 // 画布背景色
       }
     };
 
     var app = new Tiny.Application(config);
+    document.body.append(app.view);
+    
     Tiny.Physics.P2.startSystem(app, {
       gravity: [0, 0]
     });
@@ -52,10 +51,11 @@
       container.addChild(title);
     }
 
-    var resources = Tiny.Loader.resources;
+    // var resources = Tiny.Loader.resources;
     var sprite;
-    function init() {
+    function init(resources) {
       container = new Tiny.Container();
+      app.run(container);
 
       var line = new DebugLine();
 
@@ -129,17 +129,16 @@
 
       container.addChild(line);
 
-      app.run(container);
       app.onUpdate(function () {
         line.setTo(ant.x, ant.y, mouseCursor.x, mouseCursor.y);
       });
     }
-
-    Tiny.Loader
+    const loader = new Tiny.loaders.Loader();
+    loader
       .add('ant', 'images/super_ant.png')
       .add('cursor', 'images/enemy-bullet.png')
       .load(function (a, b) {
-        init();
+        init(b);
       });
   </script>
 </body>
